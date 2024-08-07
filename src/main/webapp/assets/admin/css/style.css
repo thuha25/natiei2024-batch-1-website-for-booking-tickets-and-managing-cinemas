@@ -1,0 +1,169 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    color: black;
+    padding: 1rem;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 200px;
+    width: calc(100% - 100px);
+    height: 68px;
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+}
+header .search-bar {
+    margin-right: auto;
+    margin-left: 200px;
+}
+
+header .search-bar form {
+    display: flex;
+    align-items: center;
+}
+
+header .search-bar input[type="search"] {
+    width: 500px;
+}
+
+header .search-bar .btn {
+    margin-left: -48px;
+    background-color: #2a5af1;
+    color: #f1f1f8;
+}
+
+
+header div.language-selector{
+    padding-right: 20px;
+}
+header .profile-menu button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+}
+
+header .profile-menu .btn-light:hover {
+    background: none;
+}
+
+header .profile-menu .dropdown-toggle::after {
+    display: none;
+}
+
+header .profile-menu button img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+header .profile-name {
+    margin-right: 10px;
+}
+#body-row {
+    margin-left:0;
+    margin-right:0;
+}
+#sidebar-container {
+    min-height: 100vh;
+    width: 300px;
+    background-color: #081f56;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#sidebar-container h4 {
+    margin: 0;
+    padding: 20px;
+    color: #FFFFFF;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+/* Sidebar sizes when expanded and expanded */
+.sidebar-expanded {
+    width: 120px !important;
+}
+.sidebar-collapsed {
+    width: 300px !important;
+}
+/* Menu item*/
+#sidebar-container li.list-group-item{
+    background-color: #4a7cf2;
+}
+#sidebar-container .list-group a {
+    height: 50px;
+    color: white;
+}
+#sidebar-container .list-group-item:hover {
+    color: rgb(255, 215, 0);
+}
+#sidebar-container .list-group span.menu-collapsed{
+    padding-left: 10px;
+}
+/* Submenu item*/
+#sidebar-container .list-group .sidebar-submenu a {
+    height: 45px;
+    padding-left: 30px;
+}
+.sidebar-submenu {
+    font-size: 0.9rem;
+}
+
+/* Separators */
+.sidebar-separator-title {
+    background-color: #333;
+    height: 35px;
+}
+.sidebar-separator {
+    background-color: #333;
+    height: 25px;
+}
+.logo-separator {
+    background-color: #333;
+    height: 60px;
+}
+li.list-group-item{
+    border: none;
+}
+
+a.list-group-item{
+    border: none;
+}
+/* Closed submenu icon */
+#sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
+    content: " \f0d7";
+    font-family: FontAwesome, serif;
+    display: inline;
+    text-align: right;
+    padding-left: 10px;
+}
+/* Opened submenu icon */
+#sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
+    content: " \f0da";
+    font-family: FontAwesome, serif;
+    display: inline;
+    text-align: right;
+    padding-left: 10px;
+}
+.collapse {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+.menu-collapsed, .submenu-icon, .sidebar-submenu {
+    display: none;
+}
+.sidebar-collapsed .menu-collapsed,
+.sidebar-collapsed .submenu-icon,
+.sidebar-collapsed .sidebar-submenu  {
+    display: inline;
+}
