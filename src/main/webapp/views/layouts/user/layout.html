@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" th:href="@{/assets/user/css/header.css}">
+    <link rel="stylesheet" th:href="@{/assets/user/css/footer.css}">
+</head>
+<body>
+<div th:insert="~{layouts/user/header :: header}"></div>
+
+<section layout:fragment="body">
+    Main content will be included here
+</section>
+
+<footer th:replace="~{layouts/user/footer :: footer}"></footer>
+</body>
+</html>

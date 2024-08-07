@@ -15,12 +15,12 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         var user = new User();
-        user.setName("Sun Asterisk");
-        user.setAddress("Japan");
+        user.setFullName("Sun Asterisk");
+        user.setEmail("Japan@b.com");
         var savedUser = userService.save(user);
         model.addAttribute("user", savedUser);
         userService.delete(savedUser);
-        return "user-info";
+        return "user/home-page";
     }
 
 }
