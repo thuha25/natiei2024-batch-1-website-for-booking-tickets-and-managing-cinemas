@@ -18,4 +18,11 @@
             </bean>
         </property>
     </bean>
+    <bean id="movieService" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="cinemas.services.impl.MovieServiceImpl">
+                <constructor-arg ref="movieRepository" />
+            </bean>
+        </property>
+    </bean>
 </beans>
