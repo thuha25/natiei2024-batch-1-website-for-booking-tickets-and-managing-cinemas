@@ -28,7 +28,7 @@ public abstract class BaseRepositoryImpl<T, ID> implements BaseRepository<T, ID>
     }
 
     @Override
-    public <S extends T> Iterable<S> saveAll(Iterable<S> entities) {
+    public <S extends T> List<S> saveAll(List<S> entities) {
         if (entities == null) {
             throw new IllegalArgumentException("The given entities must not be null!");
         }
@@ -51,7 +51,7 @@ public abstract class BaseRepositoryImpl<T, ID> implements BaseRepository<T, ID>
     }
 
     @Override
-    public Iterable<T> findAll() {
+    public List<T> findAll() {
         String hql = "FROM " + domainClass.getName();
         return entityManager.createQuery(hql, domainClass).getResultList();
     }
@@ -79,7 +79,7 @@ public abstract class BaseRepositoryImpl<T, ID> implements BaseRepository<T, ID>
 
 
     @Override
-    public void deleteAll(Iterable<? extends T> entities) {
+    public void deleteAll(List<? extends T> entities) {
         if (entities == null) {
             throw new IllegalArgumentException("The given entities must not be null!");
         }

@@ -11,4 +11,11 @@
             </bean>
         </property>
     </bean>
+    <bean id="bannerService" parent="baseTransactionProxy">
+        <property name="target">
+            <bean class="cinemas.services.impl.BannerServiceImpl">
+                <constructor-arg ref="bannerRepository" />
+            </bean>
+        </property>
+    </bean>
 </beans>
