@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>header</title>
+</head>
+<body>
+<header class="custom-bg d-flex align-items-center sticky-top">
+    <div class="search-bar">
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    <div class="d-flex align-items-center">
+        <div class="language-selector">
+            <select class="form-select" aria-label="Select Language">
+                <option value="en">
+                    <i class="fas fa-flag-usa"></i>
+                    English
+                </option>
+                <option value="vi" data-img="path-to-vietnamese-flag.png">Vietnamese</option>
+            </select>
+        </div>
+        <div class="d-flex align-items-center profile-name">
+            <span class="text-white-200">Nguyễn Duy</span>
+            <div class="dropdown profile-menu position-relative">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <img src="https://via.placeholder.com/40" alt="Profile Image">
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>
