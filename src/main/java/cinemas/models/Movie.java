@@ -38,7 +38,8 @@ public class Movie extends SoftDeletableEntity {
     private String trailer;
     @Column(name = "age_limit")
     private Integer ageLimit = 0; // Example: '18' is for age >= 18
-
+    @Column(name = "photo_url")
+    private String photoUrl;
     @ManyToMany(mappedBy = "movies")
     private Set<Genre> genres;
 
@@ -153,5 +154,13 @@ public class Movie extends SoftDeletableEntity {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }
