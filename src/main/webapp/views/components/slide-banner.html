@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title> Example </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+    <div class="slideshow-container" th:fragment="slideBanner" >
+        <ul>
+            <li th:each="banner : ${banners}" class="Slide active cdSlide">
+                <a th:href="${banner.targetUrl}" class="AnhSlide">
+                    <img th:src="@{${banner.photoUrl}}" alt="" class="Anh">
+                </a>
+            </li>
+        </ul>
+
+        <div class="nutchuyenSlide">
+            <ul class="quanlynutchuyen">
+                <li th:each="banner, iterStat : ${banners}"
+                    th:classappend="${iterStat.index == 0} ? 'kichhoat' : ''"></li>
+            </ul>
+        </div>
+
+        <div class="prev">
+            <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="next">
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>
