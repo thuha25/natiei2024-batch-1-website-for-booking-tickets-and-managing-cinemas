@@ -29,4 +29,20 @@
   <bean id="customUserDetailsService" class="cinemas.services.impl.CustomUserDetailsServiceImpl">
     <constructor-arg ref="userRepository"/>
   </bean>
+
+  <bean id="cityService" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="cinemas.services.impl.CityServiceImpl">
+        <constructor-arg ref="cityRepository"/>
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="theaterService" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="cinemas.services.impl.TheaterServiceImpl">
+        <constructor-arg ref="theaterRepository"/>
+      </bean>
+    </property>
+  </bean>
 </beans>
