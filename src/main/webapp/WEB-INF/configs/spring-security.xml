@@ -11,9 +11,7 @@
     <security:intercept-url pattern="/login" access="isAnonymous()"/>
     <security:intercept-url pattern="/logout" access="permitAll"/>
     <security:intercept-url pattern="/" access="permitAll"/>
-
     <security:intercept-url pattern="/assets/**" access="permitAll"/>
-
 
     <!-- Restrict access to admin pages, require CUSTOMER role -->
     <security:intercept-url pattern="/customer/**" access="hasRole('ROLE_CUSTOMER')"/>
