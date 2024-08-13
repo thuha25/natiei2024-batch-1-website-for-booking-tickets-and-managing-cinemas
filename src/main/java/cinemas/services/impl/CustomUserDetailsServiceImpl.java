@@ -2,7 +2,7 @@ package cinemas.services.impl;
 
 import cinemas.enums.RoleEnum;
 import cinemas.models.User;
-import cinemas.repositories.UserRepository;
+import cinemas.repositories.UsersRepository;
 import cinemas.services.CustomUserDetailsService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,17 +13,17 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
-    private UserRepository userRepository;
+    private UsersRepository usersRepository;
 
-    public CustomUserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailsServiceImpl(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = null;
         try {
-            user = userRepository.findByEmail(email);
+            user = usersRepository.findByEmail(email);
         } catch (Exception e) {
             throw new UsernameNotFoundException("User not found");
         }
