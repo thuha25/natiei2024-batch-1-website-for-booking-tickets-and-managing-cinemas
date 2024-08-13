@@ -1,6 +1,7 @@
 package cinemas.models;
 
 import cinemas.converters.ZonedDateTimeConverter;
+import cinemas.enums.MovieStatus;
 import cinemas.models.common.SoftDeletableEntity;
 import jakarta.persistence.*;
 
@@ -40,6 +41,8 @@ public class Movie extends SoftDeletableEntity {
     private Integer ageLimit = 0; // Example: '18' is for age >= 18
     @Column(name = "photo_url")
     private String photoUrl;
+    @Enumerated(EnumType.ORDINAL)
+    private MovieStatus status = MovieStatus.COMING_SOON; // 0 = coming soon, 1 = now showing, 2 = end showing
     @ManyToMany(mappedBy = "movies")
     private Set<Genre> genres;
 
@@ -158,6 +161,12 @@ public class Movie extends SoftDeletableEntity {
 
     public String getPhotoUrl() {
         return photoUrl;
+    }
+    public MovieStatus getStatus() {
+        return status;
+    }
+    public void setStatus(MovieStatus status) {
+        this.status = status;
     }
 
     public void setPhotoUrl(String photoUrl) {
