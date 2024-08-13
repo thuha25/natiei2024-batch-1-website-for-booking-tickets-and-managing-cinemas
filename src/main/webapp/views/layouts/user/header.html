@@ -3,7 +3,7 @@
 <head>
 </head>
 <body>
-<header class="bg-primary text-white text-center py-3">
+<header class=" text-white text-center py-3">
     <div class="header-container">
         <div class="logo">
             <a th:href="@{/}">
@@ -16,9 +16,11 @@
         </div>
         <div class="language-switch">
             <button class="btn btn-primary" th:classappend="${#locale.language == 'vi' ? ' active' : ''}"
-               onclick="reloadPageWithLanguage('vi', this)">VI</button>
+                    onclick="reloadPageWithLanguage('vi', this)">VI
+            </button>
             <button class="btn btn-primary" th:classappend="${#locale.language == 'en' ? ' active' : ''}"
-               onclick="reloadPageWithLanguage('en', this)">EN</button>
+                    onclick="reloadPageWithLanguage('en', this)">EN
+            </button>
         </div>
         <div th:if="${#authorization.expression('isAuthenticated()')}" class="user-info">
             <span class="username" th:text="#{header.greet(${session.user.getFullName()})}"></span>
@@ -30,9 +32,15 @@
     </div>
     <nav class="main-nav">
         <ul>
-            <li><a href="listFilm">PHIM>></a></li>
-            <li><a href="theater">RẠP CGV>></a></li>
-            <li><a href="member">THÀNH VIÊN>></a></li>
+            <li>
+                <a th:href="@{/}">PHIM>></a>
+                <div class="dropdown">
+                    <a th:href="@{/now-showing}">Phim đang chiếu</a>
+                    <a th:href="@{/upcomingFilm}">Phim sắp chiếu</a>
+                </div>
+            </li>
+            <li><a th:href="@{/theaters}">RẠP CGV>></a></li>
+            <li><a th:href="@{/member}">THÀNH VIÊN>></a></li>
         </ul>
     </nav>
     <script>

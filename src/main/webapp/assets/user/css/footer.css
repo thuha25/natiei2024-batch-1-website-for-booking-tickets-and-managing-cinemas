@@ -4,7 +4,9 @@ footer {
     padding: 20px 0;
     font-family: 'Roboto', sans-serif;
 }
-
+footer * {
+    box-sizing: content-box;
+}
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
