@@ -30,8 +30,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         try {
             if (authentication.getAuthorities().stream()
-                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"))) {
-                response.sendRedirect(request.getContextPath() + "/admin/");
+                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_MANAGER"))) {
+                response.sendRedirect(request.getContextPath() + "/admin");
             } else {
                 response.sendRedirect(request.getContextPath() + "/");
             }
