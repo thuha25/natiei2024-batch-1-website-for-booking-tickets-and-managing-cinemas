@@ -13,14 +13,14 @@ public class Seat {
     private Integer id;
     private String name;
     @Enumerated(EnumType.ORDINAL)
-    private SeatTypeEnum type; // 0 = standard, 1 = vip, 2 = couple
-    private Boolean available;
+    private SeatTypeEnum type;
+    private Boolean available = true;
     @Column(name = "vertical_index")
     private Integer verticalIndex;
     @Column(name = "horizontal_index")
     private Integer horizontalIndex;
     @ManyToOne
-    @JoinColumn(name = "screen_id", insertable = false, updatable = false)
+    @JoinColumn(name = "screen_id")
     private Screen screen;
 
     // Getters and Setters
