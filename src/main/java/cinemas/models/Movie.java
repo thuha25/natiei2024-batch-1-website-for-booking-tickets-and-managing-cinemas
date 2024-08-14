@@ -43,7 +43,7 @@ public class Movie extends SoftDeletableEntity {
     private String photoUrl;
     @Enumerated(EnumType.ORDINAL)
     private MovieStatus status = MovieStatus.COMING_SOON; // 0 = coming soon, 1 = now showing, 2 = end showing
-    @ManyToMany(mappedBy = "movies")
+    @ManyToMany(mappedBy = "movies",fetch = FetchType.EAGER)
     private Set<Genre> genres;
 
     // Getters and Setters
