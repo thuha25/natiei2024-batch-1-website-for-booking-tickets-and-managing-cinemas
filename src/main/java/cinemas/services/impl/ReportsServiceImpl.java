@@ -53,7 +53,7 @@ public class ReportsServiceImpl implements ReportsService {
         }
         // Initialize a map with all days within the last 30 days, defaulting to zero
         Map<LocalDate, Long> dailyTotals = new LinkedHashMap<>(); // LinkedHashMap to maintain insertion order
-        for (int i = 0; i <= days; i++) {
+        for (int i = days; i >= 0; i--) {
             LocalDate date = currentDate.minusDays(i).toLocalDate();
             dailyTotals.put(date, 0L); // Initialize with zero as Long
         }

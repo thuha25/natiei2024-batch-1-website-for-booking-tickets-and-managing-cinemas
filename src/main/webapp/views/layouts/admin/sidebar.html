@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.w3.org/1999/xhtml"
+        lang="en"
+>
 <body>
   <div id="sidebar-container" class="sidebar-collapsed">
     <div class="logo">
@@ -19,8 +24,7 @@
       <button id="sidebar-toggle" class="btn btn-outline-success">
         <i id="sidebar-toggle-arrow" class="fas fa-angle-double-right"></i>
       </button>
-      <a
-        href="#"
+      <a href="#" th:href="@{/admin}"
         aria-expanded="false"
         class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
       >
@@ -79,9 +83,7 @@
           <span class="submenu-icon ml-auto"></span>
         </div>
       </a>
-      <a
-        href=""
-        data-toggle="collapse"
+      <a href="#" th:href="@{/admin/screens}"
         aria-expanded="false"
         class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
       >
@@ -90,10 +92,9 @@
           class="d-flex w-100 justify-content-center align-items-center"
         >
           <span class="fas fa-video fa-fw mr-3"></span>
-          <span class="menu-collapsed text-nowrap overflow-hidden"
-            >Creening rooms</span
-          >
-          <span class="submenu-icon ml-auto"></span>
+          <span class="menu-collapsed text-nowrap overflow-hidden">
+            Phòng chiếu
+          </span>
         </div>
       </a>
       <a

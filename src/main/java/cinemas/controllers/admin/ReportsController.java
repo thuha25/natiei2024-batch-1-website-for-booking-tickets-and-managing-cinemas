@@ -1,6 +1,7 @@
 package cinemas.controllers.admin;
 
 import cinemas.enums.ReportTimeSpanEnum;
+import cinemas.exceptions.TheaterNotFoundException;
 import cinemas.models.City;
 import cinemas.models.Theater;
 import cinemas.services.ReportsService;
@@ -27,7 +28,7 @@ public class ReportsController {
     @GetMapping("/revenue")
     public String getAdminReport(@RequestParam(value = "theaterId", required = false) String theaterId,
             @RequestParam(value = "time", required = false) String time,
-            Model model) {
+            Model model) throws TheaterNotFoundException {
         // Fetch booking summaries
         Integer id = parseIntOrNull(theaterId);
         ReportTimeSpanEnum timeSpan = ReportTimeSpanEnum.fromOrdinal(parseIntOrNull(time));
@@ -39,8 +40,7 @@ public class ReportsController {
         if (id != null) {
             theater = theatersService.getTheaterById(id);
             if (theater == null) {
-                throw new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Theater Not Found");
+                throw new TheaterNotFoundException();
             }
         }
         if (theater != null) {
