@@ -15,4 +15,8 @@ public class TheatersServiceImpl implements TheatersService {
     public Theater getTheaterById(int id) {
         return theatersRepository.findById(id).orElse(null);
     }
+    @Override
+    public Theater save(Theater theater) {
+        return theatersRepository.save(theater);
+    }
 }

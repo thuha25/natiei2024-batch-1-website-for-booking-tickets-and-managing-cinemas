@@ -30,6 +30,13 @@
     <constructor-arg ref="usersRepository"/>
   </bean>
 
+  <bean id="screensService" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="cinemas.services.impl.ScreensServiceImpl">
+        <constructor-arg ref="screensRepository" />
+      </bean>
+    </property>
+  </bean>
   <bean id="citiesService" parent="baseTransactionProxy">
     <property name="target">
       <bean class="cinemas.services.impl.CitiesServiceImpl">
@@ -49,6 +56,13 @@
     <property name="target">
       <bean class="cinemas.services.impl.ReportsServiceImpl">
         <constructor-arg ref="bookingsRepository"/>
+      </bean>
+    </property>
+  </bean>
+  <bean id="showtimesService" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="cinemas.services.impl.ShowtimesServiceImpl">
+        <constructor-arg ref="showtimesRepository" />
       </bean>
     </property>
   </bean>

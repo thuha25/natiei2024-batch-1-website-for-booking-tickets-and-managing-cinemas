@@ -14,11 +14,17 @@
             color: #333;
         }
     </style>
+
+    <!--Custom JS -->
+    <script th:src="@{/assets/user/js/slide-banner.js}"></script>
+    <script th:src="@{/assets/user/js/slide-movie.js}"></script>
+    <script th:src="@{/assets/user/js/dialog-ticket.js}"></script>
 </head>
 <body>
 <section layout:fragment="body">
     <div th:insert="~{components/slide-banner}"> </div>
     <div th:insert="~{components/slide-movie}"> </div>
+    <div th:insert="~{components/dialog-ticket}"> </div>
 </section>
 </body>
 </html>
