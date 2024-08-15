@@ -1,6 +1,7 @@
 package cinemas.repositories.impl;
 
 import cinemas.models.Seat;
+import cinemas.repositories.SeatsRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository("seatsRepository")

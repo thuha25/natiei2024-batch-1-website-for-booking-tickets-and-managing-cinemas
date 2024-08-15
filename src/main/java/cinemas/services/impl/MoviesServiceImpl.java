@@ -1,5 +1,8 @@
 package cinemas.services.impl;
 
+import cinemas.dtos.Pageable;
+import cinemas.dtos.PaginationResult;
+import cinemas.enums.MovieStatus;
 import cinemas.models.Movie;
 import cinemas.repositories.MoviesRepository;
 import cinemas.services.MoviesService;
@@ -26,5 +29,14 @@ public class MoviesServiceImpl implements MoviesService {
     @Override
     public Optional<Movie> findById(int id) {
         return moviesRepository.findById(id);
+    }
+
+    @Override
+    public PaginationResult<Movie> getPaginationMoviesByTitleAndStatus(String keyword, int page, int size, String status) {
+        MovieStatus movieStatus = MovieStatus.fromValue(status);
+        var pageable = new Pageable(page, size);
+        var movies = moviesRepository.getMoviesByTitleAndStatus(keyword, pageable, movieStatus);
+        var totalElements = moviesRepository.countMoviesByTitleAndStatus(keyword, movieStatus);
+        return new PaginationResult<>(totalElements, size, movies);
     }
 }
