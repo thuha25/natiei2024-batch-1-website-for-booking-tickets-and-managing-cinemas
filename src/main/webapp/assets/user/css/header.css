@@ -5,7 +5,6 @@ header {
     padding: 20px 0;
     font-family: 'Roboto', sans-serif;
 }
-
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -71,8 +70,6 @@ header {
 .main-nav {
     background-color: #fff;
     border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 20px;
 }
 
 .main-nav ul {
@@ -82,11 +79,37 @@ header {
     display: flex;
     align-items: center;
 }
-
+.main-nav li {
+    position: relative;
+    display: inline-block;
+}
 .main-nav ul li {
     margin-right: 20px;
 }
+.main-nav a {
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    color: white;
+}
+.main-nav .dropdown {
+    display: none;
+    position: absolute;
+    background-color: #222121;
+    min-width: 200px;
+    z-index: 1;
+    left: 20px;
+}
 
+.main-nav .dropdown a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.main-nav li:hover .dropdown {
+    display: block;
+}
 .main-nav ul li a {
     text-decoration: none;
     color: #333;
