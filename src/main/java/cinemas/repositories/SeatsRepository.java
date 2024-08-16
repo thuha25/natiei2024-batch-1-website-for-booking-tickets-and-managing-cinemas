@@ -1,7 +1,6 @@
-package cinemas.repositories.impl;
+package cinemas.repositories;
 
 import cinemas.models.Seat;
-import cinemas.repositories.BaseRepository;
 
 public interface SeatsRepository extends BaseRepository<Seat, Integer> {
 }
