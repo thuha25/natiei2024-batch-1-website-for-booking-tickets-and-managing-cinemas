@@ -1,0 +1,20 @@
+.up-coming-page .coming {
+    font-size: 2.5em;
+}
+
+.up-coming-page .show-ing {
+    font-size: 1.5em;
+    height: 56px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.up-coming-page .show-ing a {
+    color: gray;
+    text-decoration: none;
+}
+
+.up-coming-page .show-ing a:hover {
+    color: black;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phim Sắp Chiếu</title>
+</head>
+<body>
+<div class="up-coming-page">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-6">
+                <div class="coming">Phim Sắp Chiếu</div>
+            </div>
+            <div class="col-6 text-right">
+                <div class="show-ing"><a th:href="@{/movies/now-showing}">Phim Đang Chiếu</a></div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div th:each="movie : ${movies}" class="col-md-3 col-sm-6 mb-4">
+                <a th:href="@{/movies/{id}(id=${movie.id})}" class="card-link">
+                    <div class="card">
+                        <div class="card-img-top position-relative">
+                            <img th:src="@{${movie.photoUrl}}" class="img-fluid" alt="Poster">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${movie.titleVn}">Tiêu đề phim</h5>
+                            <p class="card-text">
+                                <strong>Thể loại:</strong> <span th:each="genre : ${movie.genres}"
+                                                                 th:text="${genre.nameVn} + ', '">Thể loại</span><br>
+                                <strong>Thời lượng:</strong> <span th:text="${movie.runningTime} + ' phút'">Thời lượng</span><br>
+                            </p>
+                            <div class="row text-center">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <a th:href="@{/tickets/buy/{id}(id=${movie.id})}" class="btn btn-danger btn-sm">Mua Vé</a>
+                                    <div class="fb-like" data-href="/" data-width="16" data-layout="button_count"
+                                         data-action="like" data-size="large" data-share="false"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
