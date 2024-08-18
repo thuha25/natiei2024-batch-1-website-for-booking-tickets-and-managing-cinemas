@@ -1,0 +1,231 @@
+.main-container {
+    background-color: #ffffff;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
+.main{
+    background-color: #f6f1f1;
+}
+.main-container .page-title {
+    margin-top: 0;
+    text-align: center;
+    padding: 5px;
+    background: #231d1c;
+    margin-bottom: 20px;
+}
+.main-container .page-title h1 {
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 32px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+.discount .col-1 {
+    float: left;
+    padding-left: 0;
+    max-width: 70%;
+}
+.discount .col-2 {
+    float: right;
+    padding-right: 0;
+    max-width: 30%;
+}
+ ol, li {
+    list-style: none;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+#checkoutSteps li.section {
+    margin-bottom: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+#checkoutSteps.opc .section .step-title {
+    background: #bcbdc0;
+    border: 2px solid #9d9fa2;
+}
+#checkoutSteps.opc .section .step-title h2 {
+    margin: 0 15px;
+    text-align: left;
+    float: none;
+    color: #231f20;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 32px;
+}
+.class-step-payment {
+    text-transform: none;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 14px;
+}
+#checkoutSteps.opc .section .step {
+    padding: 5px 0;
+}
+#checkout-step-1 dl dt {
+    margin-bottom: 5px;
+}
+#checkout-step-1 dt{
+    background: #fff1ce;
+    padding: 10px;
+}
+.p-2 {
+    padding: 0 2% !important;
+}
+input {
+    font-family: Verdana, Arial, sans-serif;
+    color: #222;
+    font-size: 14px;
+    line-height: 24px;
+}
+.discount-chose-points {
+    border-top: 1px dashed #c3bda5;
+    margin: 15px 0;
+    padding-top: 10px;
+}
+.promo-verification {
+    float: left;
+    width: 100%;
+    margin: 15px;
+}
+.sp-methods {
+    margin: 0 0 8px;
+}
+.sp-methods dt input.radio{
+    float: left;
+    margin-right: -40px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+#checkout-payment-method-load {
+    background: #fff1ce;
+}
+#checkout-payment-method-load label {
+    background: none;
+}
+.sp-methods dt label{
+    color: #636363;
+    display: inline-block;
+    width: auto;
+    max-width: none;
+    min-width: 250px;
+    float: none;
+    padding: 6px 10px 6px 40px;
+}
+.radio + label {
+    font-size: 13px;
+    font-weight: normal;
+    vertical-align: top;
+}
+.pm_icon {
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+    width: 37px;
+    height: 37px;
+    margin-right: 5px;
+    margin-top: -9px;
+    display: inline-block;
+}
+.cart-items {
+    border: 1px solid #d4d3c9;
+}
+.cart-sidebar table {
+    width: 100%;
+    background-color: #fff1ce;
+}
+.cart-sidebar thead, .cart-sidebar tfoot {
+    font-weight: bold;
+    text-align: center;
+}
+.cart-sidebar thead tr {
+    border-bottom: 1px solid #d4d3c9;
+}
+.data-table td, .data-table th {
+    padding: 10px;
+    vertical-align: top;
+}
+.cart-sidebar .data-table tbody tr {
+    border-bottom: 1px solid #d4d3c9;
+}
+.data-table tbody td {
+    border-bottom: 1px solid #b5b5b5;
+}
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.data-table tfoot tr {
+    background: #f4f4f4;
+}
+.chosen-discount, .chosen-payment {
+    margin-top: 15px;
+    border: 1px solid #d4d3c9;
+}
+.cart-sidebar tfoot td {
+    background: #d0cece;
+}
+.chosen-payment thead tr {
+    background: #e71a0f;
+    color: #fff;
+}
+.countexpire {
+    margin-top: 15px;
+    background: #d0cece;
+    color: #fff;
+    text-align: center;
+    border: 1px solid #d4d3c9;
+}
+.countexpire h3 {
+    background: #fff1ce;
+    padding: 10px 0;
+    font-weight: bold;
+    color: #222;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 16px;
+}
+.countexpire > div {
+    padding: 10px;
+    border-radius: 3px;
+    display: inline-block;
+    background-color: #fdfcf0;
+}
+.countexpire div > span {
+    padding: 10px;
+    border-radius: 5px;
+    background: #e71a0f;
+    display: inline-block;
+    width: 40px;
+    color: #fff;
+}
+.cgvminutes,.cgvseconds{
+    font-size: 20px;
+    font-weight: normal;
+}
+.smalltext {
+    padding-top: 5px;
+    font-size: 14px;
+    font-weight: 100;
+    color: #999;
+}
+.content-bottom.cgv-bottom {
+    padding-top: 20px;
+    clear: both;
+}
+#countdown {
+    padding: 0 0 10px;
+    font-weight: bold;
+}
+.data-table tbody tr:last-child {
+    border-bottom: none;
+}
+.pm_name {
+    margin-top: -31px;
+    vertical-align: middle;
+    display: inline-block
+}
+a:hover{
+    text-decoration: none;
+}
