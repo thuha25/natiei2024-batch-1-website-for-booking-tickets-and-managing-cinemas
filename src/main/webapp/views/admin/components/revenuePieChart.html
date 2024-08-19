@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vn">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title></title>
+</head>
+<body>
+<div class="chart-pie" style="height: 300px;">
+    <canvas id="revenuePieChart"></canvas>
+</div>
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        // Doanh thu từ vé và thức ăn nhanh
+        const ctxRevenuePie = document.getElementById('revenuePieChart').getContext('2d');
+        new Chart(ctxRevenuePie, {
+            type: 'pie',
+            data: {
+                labels: ['Vé', 'Thức ăn nhanh'],
+                datasets: [{
+                    data: [1500000, 400000],
+                    backgroundColor: ['#4e73df', '#1cc88a']
+                }]
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vn">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title></title>
+</head>
+<body>
+<div class="chart-pie" style="height: 300px;">
+    <canvas id="foodRevenuePieChart"></canvas>
+</div>
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        // Doanh thu từ vé và thức ăn nhanh
+        const ctxFoodRevenuePie = document.getElementById('foodRevenuePieChart').getContext('2d');
+        new Chart(ctxFoodRevenuePie, {
+            type: 'pie',
+            data: {
+                labels: ['Bắp', 'Coca','Khoai tây chiên','Chả cá trứng cút','Xúc xích hồ lô'],
+                datasets: [{
+                    data: [90000, 60000, 30000, 15000, 20000],
+                    backgroundColor: ['#f6c23e', '#e74a3b', '#1cc88a', '#36b9cc', '#ff8c00']
+                }]
+            }
+        });
+    });
+</script>
+</body>
+</html>
