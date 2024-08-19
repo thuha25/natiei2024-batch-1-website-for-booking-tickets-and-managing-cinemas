@@ -3,5 +3,6 @@ package cinemas.enums;
 public enum BookingStatusEnum {
     BOOKED,
     PRINTED,
-    REFUNDED
+    REFUNDED,
+    PAID
 }
