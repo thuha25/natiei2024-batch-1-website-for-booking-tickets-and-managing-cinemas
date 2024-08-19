@@ -10,8 +10,12 @@ import org.springframework.web.server.ResponseStatusException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseStatusException handleTheaterNotFound(NotFoundException ex) {
+    public ResponseStatusException handleNotFoundException(NotFoundException ex) {
         return new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseStatusException handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }
 

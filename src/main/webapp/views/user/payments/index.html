@@ -6,10 +6,12 @@
     <meta charset="UTF-8">
     <title>Payment</title>
     <link rel="stylesheet" th:href="@{/assets/user/css/payment.css}">
+    <script th:src="@{/assets/user/js/payment.js}"></script>
+    <script th:src="@{/assets/user/js/count-down.js}"></script>
 </head>
 <body>
 <section layout:fragment="body" class="main-container">
-    <div class="main">
+    <form class="main" th:action="@{/ticket-bookings/showtimes/{id}/confirm-payment(id=${showtime.id})}" method="post">
         <div class="page-title">
             <h1>Thanh toán</h1>
         </div>
@@ -31,15 +33,15 @@
                                     <div class="col1-set">
                                         <div class="p-2">
                                             <div class="content">
-                                                <p>Bạn có: 0 P</p>
+                                                <p th:text="'Bạn có: ' + ${user.rewardPoints} + ' P'">Bạn có: 0 P</p>
                                                 <div class="input-box">
-                                                    <input type="text" id="cgv:points" name="points" value="0" title="" class="points-input">
-                                                    <button type="button" class="btn btn-buy-cover points-button text-white">
+                                                    <input type="number" min="0" th:max="${user.rewardPoints}" name="point_used" value="0" title="" class="points-input" id="point_input">
+                                                    <button type="button" class="btn btn-buy-cover points-button text-white" id="btn_point_use">
                                                         Sử dụng
                                                     </button>
                                                 </div>
                                                 <p class="discount-chose-points text-right">Giảm giá : <span
-                                                        class="price">0,00&nbsp;₫</span></p>
+                                                        class="price" id="discount_point">0,00&nbsp;₫</span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -107,23 +109,28 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    Ghế : A8
+                                    Giá vé:
                                 </td>
                                 <td>
-                                    <span class="price">124.909,00&nbsp;₫</span></td>
+                                    <span class="price" th:text="${#numbers.formatDecimal(seatSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">124.909,00&nbsp;₫</span></td>
                             </tr>
-
-                            <tr>
-                                <td>
-                                    CGV COMBO bắp + nước
-                                </td>
-                                <td>
-                                    <span class="price">119.000,00&nbsp;₫</span></td>
-                            </tr>
+                            <th:block th:each="foodTotalPrice : ${foodSelectionForm.getFoodTotalPrices()}">
+                                <tr >
+                                    <td th:text="${foodTotalPrice.name}">
+                                        CGV COMBO bắp + nước
+                                    </td>
+                                    <td th:text="${#numbers.formatDecimal(foodTotalPrice.totalPrice, 0, 'POINT', 0, 'COMMA')} + ' ₫'">
+                                        <span class="price">119.000,00&nbsp;₫</span>
+                                    </td>
+                                </tr>
+                            </th:block>
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td colspan="2"><span class="price">243.909,00&nbsp;₫</span></td>
+                                <td colspan="2"><span class="price"
+                                                      id = "total_price"
+                                                      th:attr = "data-value=${seatSelectionForm.getTotalPrice() + foodSelectionForm.getTotalPrice()}"
+                                                      th:text="${#numbers.formatDecimal(foodSelectionForm.getTotalPrice() + seatSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">243.909,00&nbsp;₫</span></td>
                             </tr>
                             </tfoot>
                         </table>
@@ -140,7 +147,7 @@
 
                             <tfoot>
                             <tr>
-                                <td colspan="2"><span class="price">0,00&nbsp;₫</span></td>
+                                <td colspan="2"><span class="price" id="discount_total" data-value="0">0,00&nbsp;₫</span></td>
                             </tr>
                             </tfoot>
                         </table>
@@ -157,12 +164,13 @@
 
                             <tfoot>
                             <tr>
-                                <td colspan="2"><span class="price">243.909,00&nbsp;₫</span></td>
+                                <td colspan="2"><span class="price" th:text="${#numbers.formatDecimal(foodSelectionForm.getTotalPrice() + seatSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'"
+                                    id="final_price">243.909,00&nbsp;₫</span></td>
                             </tr>
                             </tfoot>
                         </table>
                     </div>
-                    <div class="countexpire">
+                    <div class="countexpire" id="countdown">
                         <h3>Countdown Clock</h3>
                         <div><span class="cgvminutes">4</span>
                             <div class="smalltext">Minutes</div>
@@ -174,11 +182,17 @@
                 </div>
             </div>
         </div>
-        <div class="content-bottom cgv-bottom"></div>
-        <a href="#" class="d-flex justify-content-center">
-            <button class="btn text-white" style="background-color: orangered">Thanh toán</button>
+        <div class="content-bottom cgv-bottom">
+            <div class="bottom-content">
+                <div class="format-bg-top"></div>
+                <div th:replace="~{components/foot-booking}"></div>
+                <div class="format-bg-bottom"></div>
+            </div>
+        </div>
+        <a href="#" class="d-flex justify-content-center pt-5">
+            <button type="submit" class="btn text-white" style="background-color: orangered">Thanh toán</button>
         </a>
-    </div>
+    </form>
 </section>
 </body>
 </html>

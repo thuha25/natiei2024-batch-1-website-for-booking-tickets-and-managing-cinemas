@@ -25,4 +25,17 @@ public class FoodSelectionFormDto {
         }
         return totalPrice;
     }
+
+    public List<FoodTotalPriceDto> getFoodTotalPrices(){
+        List<FoodTotalPriceDto> foodTotalPricesDto = new ArrayList<>();
+        for(var foodSelection : foodSelections){
+            if(foodSelection.getCount() > 0){
+                FoodTotalPriceDto foodTotalPriceDto = new FoodTotalPriceDto();
+                foodTotalPriceDto.setTotalPrice(foodSelection.getFood().getPrice() * foodSelection.getCount());
+                foodTotalPriceDto.setName(foodSelection.getFood().getName());
+                foodTotalPricesDto.add(foodTotalPriceDto);
+            }
+        }
+        return foodTotalPricesDto;
+    }
 }
