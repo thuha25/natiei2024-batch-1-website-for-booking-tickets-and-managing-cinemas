@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layouts/user/layout}" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+    <link rel="stylesheet" th:href="@{/assets/user/css/payment.css}">
+</head>
+<body>
+<section layout:fragment="body" class="main-container">
+    <div class="main">
+        <div class="page-title">
+            <h1>Thanh toán</h1>
+        </div>
+        <div class="discount">
+            <div class="col-1">
+                <ol class="opc" id="checkoutSteps">
+                    <li id="opc-1" class="section">
+                        <div class="step-title">
+                            <h2>
+                                <span class="class-step-payment">Bước 1: </span>Giảm giá
+                            </h2>
+                        </div>
+                        <div id="checkout-step-1" class="step">
+                            <dl class="checkout-discount-method">
+                                <dt id="dt_method_1">
+                                    Điểm CGV
+                                </dt>
+                                <dd id="dd_method_1">
+                                    <div class="col1-set">
+                                        <div class="p-2">
+                                            <div class="content">
+                                                <p>Bạn có: 0 P</p>
+                                                <div class="input-box">
+                                                    <input type="text" id="cgv:points" name="points" value="0" title="" class="points-input">
+                                                    <button type="button" class="btn btn-buy-cover points-button text-white">
+                                                        Sử dụng
+                                                    </button>
+                                                </div>
+                                                <p class="discount-chose-points text-right">Giảm giá : <span
+                                                        class="price">0,00&nbsp;₫</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt id="dt_method_2">
+                                    Mã Khuyến Mãi
+                                </dt>
+                                <dd id="dd_method_2">
+                                    <div class="promo-verification">
+                                        <label>Nhập mã khuyến mãi</label>
+                                        <input name="code" title="code" class="input-text" type="text">
+                                        <button type="button" class="btn btn-buy-cover text-white">Sử dụng</button>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li id="opc-2" class="section">
+                        <div class="step-title">
+                            <h2>
+                                <span class="class-step-payment">Bước 2: </span>Hình thức thanh toán
+                            </h2>
+                        </div>
+                        <div id="checkout-step-2" class="step">
+                            <dl class="sp-methods" id="checkout-payment-method-load">
+                                <dt id="dt_method_onepay" style="margin:0 0 5px;">
+                                    <input id="p_method_onepay" name="payment_method" value="onepay" type="radio"
+                                           title="ATM card" class="radio">
+                                    <label for="p_method_onepay">
+                                            <span class="pm_icon"
+                                                  style="background-image:url('https://iguov8nhvyobj.vcdn.cloud/media/catalog/product/placeholder/default/atm_icon.png')"></span>
+                                        <span class="pm_name">ATM card</span>
+                                    </label>
+                                </dt>
+                                <dt id="dt_method_momo_pay" style="margin:0 0 5px;">
+                                    <input id="p_method_momo_pay" name="payment_method" value="momo_pay" type="radio" title="Momo" class="radio" >
+                                    <label for="p_method_momo_pay">
+                                            <span class="pm_icon" style="background-image:url('https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png')"></span>
+                                        <span class="pm_name">MOMO</span>
+                                    </label>
+                                </dt>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group checkbox">
+                            <label>
+                                <input type="checkbox">
+                                <a>Tôi đồng ý với điều khoản sử dụng và mua vé cho người có độ tuổi phù hợp </a>
+                            </label>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-2">
+                <div class="cart-sidebar">
+                    <div class="cart-items">
+                        <table class="data-table">
+                            <thead>
+                            <tr>
+                                <td colspan="2">Tổng cộng</td>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>
+                                    Ghế : A8
+                                </td>
+                                <td>
+                                    <span class="price">124.909,00&nbsp;₫</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    CGV COMBO bắp + nước
+                                </td>
+                                <td>
+                                    <span class="price">119.000,00&nbsp;₫</span></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="2"><span class="price">243.909,00&nbsp;₫</span></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="chosen-discount">
+                        <table class="data-table">
+                            <thead>
+                            <tr>
+                                <td colspan="2">Khuyến mãi</td>
+                            </tr>
+                            </thead>
+
+                            <tbody></tbody>
+
+                            <tfoot>
+                            <tr>
+                                <td colspan="2"><span class="price">0,00&nbsp;₫</span></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="chosen-payment">
+                        <table class="data-table">
+                            <thead>
+                            <tr>
+                                <td colspan="2">Tổng số tiền thanh toán</td>
+                            </tr>
+                            </thead>
+
+                            <tbody></tbody>
+
+                            <tfoot>
+                            <tr>
+                                <td colspan="2"><span class="price">243.909,00&nbsp;₫</span></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="countexpire">
+                        <h3>Countdown Clock</h3>
+                        <div><span class="cgvminutes">4</span>
+                            <div class="smalltext">Minutes</div>
+                        </div>
+                        <div><span class="cgvseconds">28</span>
+                            <div class="smalltext">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-bottom cgv-bottom"></div>
+        <a href="#" class="d-flex justify-content-center">
+            <button class="btn text-white" style="background-color: orangered">Thanh toán</button>
+        </a>
+    </div>
+</section>
+</body>
+</html>
