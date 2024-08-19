@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <link rel="stylesheet" th:href="@{/assets/user/css/foot-booking.css}">
+</head>
+<div class="minicart-wrapper">
+  <ul>
+    <li class="item first">
+      <div class="product-details">
+        <table class="info-wrapper">
+          <colgroup>
+            <col style="width: 40%">
+            <col>
+          </colgroup>
+          <tbody>
+          <tr>
+            <td>
+              <img th:src="@{${showtime.movie.photoUrl}}"
+                   alt="">
+            </td>
+            <td>
+              <table class="info-wrapper">
+                <tbody>
+                <tr>
+                  <td class="label" th:text="${showtime.movie.titleVn}">
+                    PHIM ĐIỆN ẢNH THÁM TỬ LỪNG DANH CONAN: NGÔI SAO 5 CÁNH 1
+                    TRIỆU ĐÔ
+                  </td>
+                </tr>
+                <tr>
+                  <td class="label" th:text="${showtime.screen.name}">2D</td>
+                </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </li>
+    <li class="item">
+      <div class="product-details">
+        <table class="info-wrapper">
+          <tbody>
+          <tr>
+            <td class="label">Rạp</td>
+            <td th:text="${showtime.screen.theater.name}">CGV Hùng Vương Plaza</td>
+          </tr>
+          <tr>
+            <td class="label" >Suất chiếu</td>
+            <td th:text="|${showtime.startTime.toLocalTime()} - ${showtime.startTime.toLocalDate()}|">
+              21:50, 11/08/2024
+            </td>
+          </tr>
+          <tr>
+            <td class="label">Phòng chiếu</td>
+            <td th:text="${showtime.screen.name}">Phong 9</td>
+          </tr>
+          <tr class="block-seats" style="">
+            <td class="label">Ghế</td>
+            <td class="data" id="total_seats_array">
+              <div style="display: flex; flex-wrap: wrap;">
+                <th:block th:each="entry : ${seatSelectionForm.getSeatSelectionsDto()}">
+                    <span style="margin-right: 5px;" th:text="${entry.getSeat().name}"></span>
+                </th:block>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </li>
+    <li class="item">
+      <div class="product-details">
+        <table class="info-wrapper">
+          <thead>
+          <tr class="block-box">
+            <td class="label">Giá ghế</td>
+            <td class="price" id="seat_ticket_price" th:text="${#numbers.formatDecimal(seatSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">120.000₫</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="block-con">
+            <td class="label">Combo</td>
+            <td class="price" id="combo_ticket_price" th:text="${#numbers.formatDecimal(foodSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">0,00&nbsp;₫</td>
+          </tr>
+          <tr class="block-con">
+            <td class="label">Khuyến mãi</td>
+            <td class="price" id="discount_ticket_price" >0,00&nbsp;₫</td>
+          </tr>
+          </tbody>
+          <tfoot class="block-price">
+          <tr>
+            <td class="label">Tổng</td>
+            <td class="price" colspan="2" id="final_ticket_price" th:text="${#numbers.formatDecimal(seatSelectionForm.getTotalPrice() + foodSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'"
+                ></td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </li>
+  </ul>
+</div>
+
+</html>

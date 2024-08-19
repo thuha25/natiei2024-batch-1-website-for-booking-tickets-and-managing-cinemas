@@ -1,0 +1,35 @@
+.minicart-wrapper ul {
+    width: 100%;
+}
+.minicart-wrapper ul .item.first .product-details {
+    margin: 0;
+}
+.minicart-wrapper img {
+    width: 74px;
+    height: 108px;
+    display: inline-block;
+}
+.minicart-wrapper .product-details {
+    padding-top: 10px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 0 0 10px;
+}
+.minicart-wrapper .item {
+    display: inline-block;
+    width: 32%;
+    margin-left: 1%;
+    font-size: 12px;
+}
+.info-wrapper {
+    color: #cccccc;
+}
+.info-wrapper td {
+    padding: 0 5px;
+    font-weight: bold;
+    white-space: normal;
+    vertical-align: top;
+}
+.info-wrapper td.label {
+    font-weight: normal;
+}
