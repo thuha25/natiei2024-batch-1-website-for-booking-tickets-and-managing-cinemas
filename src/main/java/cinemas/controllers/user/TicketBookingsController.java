@@ -37,17 +37,46 @@ public class TicketBookingsController {
             throw new ShowtimeNotFoundException();
         }
         var seatSelectionForm = new SeatSelectionFormDto();
+        var foodSelectionForm = new FoodSelectionFormDto();
         var seatGrid = showtimeSeatsService.getSeatsGridByShowtime(showtimeId);
         model.addAttribute("showtime", showtime);
         model.addAttribute("seatGrid", seatGrid);
         model.addAttribute("screenColumns", seatGrid[0].length); // Number of columns
         model.addAttribute("screenRows", seatGrid.length); // Number of rows
         model.addAttribute("seatSelectionForm", seatSelectionForm);
+        model.addAttribute("foodSelectionForm", foodSelectionForm);
         return "user/showtimes/show";
     }
-    @PostMapping("/showtimes/{id}") // view seats of a showtime
-    public String showFoods(@PathVariable("id") int id, Model model) {
-        return "user/showtimes/show";
+
+    @PostMapping("/showtimes/{id}")
+    public String showFoods(@RequestParam(value = "seatIds", required = false) Integer[] selectedIds, @PathVariable("id") Integer showtimeId, HttpSession session, Model model) throws ShowtimeNotFoundException {
+        Showtime showtime = showtimesService.findById(showtimeId);
+        if(showtime==null){
+            throw new ShowtimeNotFoundException();
+        }
+        User user = (User) session.getAttribute("user");
+        var showtimeSeats = showtimeSeatsService.createShowtimeSeats(showtimeId, user.getId(), selectedIds);
+        var seatSelectionForm = new SeatSelectionFormDto();
+        for(var showtimeSeat : showtimeSeats){
+            Seat seat = showtimeSeat.getSeat();
+            var seatSelection = new SeatSelectionDto();
+            seatSelection.setSeat(seat);
+            seatSelection.setPrice(BookingUtils.getSeatPrice(seat, showtime));
+            seatSelectionForm.addSeatSelection(seatSelection);
+        }
+        session.setAttribute("seatSelectionForm", seatSelectionForm);
+        List<Food> foods = foodsService.getAllFoods();
+        var foodSelectionForm = new FoodSelectionFormDto();
+        foods.forEach(food -> {
+            var foodSelection = new FoodSelectionDto();
+            foodSelection.setFood(food);
+            foodSelection.setCount(0);
+            foodSelectionForm.addFoodSelection(foodSelection);
+        });
+        model.addAttribute("seatSelectionForm", seatSelectionForm);
+        model.addAttribute("foodSelectionForm", foodSelectionForm);
+        model.addAttribute("showtime", showtime);
+        return "user/foods/index";
     }
 
 }
