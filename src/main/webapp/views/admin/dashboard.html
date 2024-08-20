@@ -1,61 +1,197 @@
 <!DOCTYPE html>
 <html
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:th="http://www.w3.org/1999/xhtml"
-  layout:decorate="~{layouts/admin/layout}"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.w3.org/1999/xhtml"
+        layout:decorate="~{layouts/admin/layout}"
 >
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/assets/admin/css/dashboard.css}">
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const revenueDetail = document.getElementById("revenue-detail");
-        if (revenueDetail) {
-          revenueDetail.addEventListener("click", function () {
-            window.open("/admin/reports/revenue", "_blank"); // Open in new tab
-          });
-        }
-      });
+        document.addEventListener("DOMContentLoaded", function () {
+            const revenueDetail = document.getElementById("revenue-detail");
+            if (revenueDetail) {
+                revenueDetail.addEventListener("click", function () {
+                    window.open("/admin/reports/revenue", "_blank"); // Open in new tab
+                });
+            }
+        });
     </script>
-  </head>
-  <body>
-    <section layout:fragment="body">
-      <div class="container-fluid">
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-center mb-4 mt-3 rounded-2" style="background-color: #15b1ff;">
-          <h1 class="h2 mb-0 text-black font-weight-bold py-2">Dashboard</h1>
+</head>
+<body>
+<section layout:fragment="body">
+    <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         </div>
-
         <!-- Content Row -->
-
         <div class="row">
-          <!-- Area Chart -->
-          <div class="col-xl-8 col-lg-7 w-50">
-            <div class="card shadow mb-4">
-              <!-- Card Header -->
-              <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-              >
-                <h6 class="m-0 font-weight-bold text-primary">Doanh thu tất cả rạp trong tuần</h6>
-                <div
-                  id="revenue-detail"
-                  style="width: 25px; height: 25px; cursor: pointer"
-                >
-                  <i class="fas fa-info-circle"></i>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Số Phim Đang Chiếu
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <!-- Card Body -->
-              <div class="card-body w-100">
-                <div class="chart-area w-100 d-flex justify-content-center align-items-center">
-                  <section
-                    th:replace="~{admin/components/revenue-chart}"
-                  ></section>
-                </div>
-              </div>
             </div>
-          </div>
+
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Tổng Doanh Thu
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">550000đ</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Số Vé Bán Được
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">4</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Lượng Người Dùng
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </section>
-  </body>
+        <!-- Content Row -->
+        <div class="row">
+            <div class="col-xl-6 col-lg-5 w-50">
+                <div class="card shadow mb-4">
+                    <!-- Card Header -->
+                    <div
+                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                    >
+                        <h6 class="m-0 font-weight-bold text-primary">Doanh thu tất cả rạp trong tuần</h6>
+                        <div
+                                id="revenue-detail"
+                                style="width: 25px; height: 25px; cursor: pointer"
+                        >
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body w-100">
+                        <div class="chart-area w-100 d-flex justify-content-center align-items-center">
+                            <section
+                                    th:replace="~{admin/components/revenue-chart}"
+                            >
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header -->
+                    <div
+                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                    >
+                        <h6 class="m-0 font-weight-bold text-success">Top 10 phim bán chạy trong tuần</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-bar w-100 d-flex justify-content-center align-items-center">
+                            <section
+                                    th:replace="~{admin/components/top10MoviesChart}"
+                            ></section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content Row -->
+        <div class="row">
+            <!-- Doanh thu từ vé và thức ăn nhanh -->
+            <div class="col-xl-6 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-info">Doanh thu từ vé và thức ăn nhanh</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie w-100 d-flex justify-content-center align-items-center">
+                            <section
+                                    th:replace="~{admin/components/revenuePieChart}"
+                            >
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Doanh thu giữa các món trong thức ăn nhanh -->
+            <div class="col-xl-6 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-warning">Doanh thu giữa các món trong thức ăn nhanh</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie w-100 d-flex justify-content-center align-items-center">
+                            <section
+                                    th:replace="~{admin/components/foodRevenuePieChart}"
+                            >
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
 </html>

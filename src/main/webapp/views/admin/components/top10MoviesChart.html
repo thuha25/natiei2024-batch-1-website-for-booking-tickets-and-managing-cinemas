@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vn">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title></title>
+</head>
+<div class="chart-bar" style="height: 250px; width: 100%">
+    <canvas id="top10MoviesChart"></canvas>
+</div>
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById('top10MoviesChart').getContext('2d');
+        const movieTitles = [
+            'Conan', 'Spider-Man', 'Avatar', 'Harry Potter', 'Batman',
+            'Iron Man', 'Frozen', 'Toy Story', 'Star Wars', 'Inception'
+        ];
+        const ticketSales = [1000, 950, 900, 850, 800, 750, 700, 650, 600, 550];
+        const top10MoviesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: movieTitles,
+                datasets: [{
+                    label: 'Số vé bán được',
+                    data: ticketSales,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 200
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+</html>
