@@ -6,34 +6,55 @@
 <div class="ticket-container">
     <div class="ticket-header">
         <div>
-            <h5>KẺ TRỘM MẶT TRĂNG 4</h5>
-            <p class="info">Chủ Nhật, 07 Tháng 7, 2024</p>
-            <p class="info">18:40 ~ 20:35</p>
-            <p class="info">CGV Vincom Đà Nẵng</p>
-            <p class="info">Tầng 4, TTTM Vincom Đà Nẵng, đường Ngô Quyền, P.An Hải Bắc, Q.Sơn Trà, TP. Đà Nẵng</p>
+            <h5 th:if="${#locale.getLanguage() == 'vi'}" th:text="${booking.movie.titleVn}">KẺ TRỘM MẶT TRĂNG 4</h5>
+            <h5 th:if="${#locale.getLanguage() == 'en'}" th:text="${booking.movie.titleEn}">KẺ TRỘM MẶT TRĂNG 4</h5>
+            <p class="info" th:text="${booking.showtime.startTime.toLocalDate()}">Chủ Nhật, 07 Tháng 7, 2024</p>
+            <p class="info" th:text="${booking.showtime.startTime.toLocalTime()}">18:40 ~ 20:35</p>
+            <p class="info" th:text="${booking.theater.name}">CGV Vincom Đà Nẵng</p>
+            <p class="info" th:if="${#locale.getLanguage() == 'vi'}" th:text="${booking.theater.addressVn}"></p>
+            <p class="info" th:if="${#locale.getLanguage() == 'en'}" th:text="${booking.theater.addressEn}"></p>
         </div>
-        <img src="https://upload.wikimedia.org/wikipedia/en/f/f9/Minions_The_Rise_of_Gru_poster.jpg" alt="Movie Poster">
+        <img th:src="${booking.movie.photoUrl}" alt="Movie Poster">
     </div>
 
-    <div class="ticket-details">
+    <div class="ticket-details" th:if="${#locale.getLanguage() == 'vi'}">
         <div class="divider"></div>
-        <p><strong>Rạp:</strong> Cinema 3</p>
-        <p><strong>Ghế:</strong> K10, K9</p>
-        <p><strong>MY COMBO MR 2022:</strong> 2</p>
+        <p><strong>Phòng chiếu:</strong> <span th:text="${booking.screen.name}"></span></p>
+        <p><strong>Ghế:</strong> <span th:text="${booking.getSeats()}"></span></p>
+        <th:block th:each="foodBooking : ${booking.getBookingFoods()}">
+            <p><strong th:text="${foodBooking.foodName}">MY COMBO MR 2022:</strong>: <span th:text="${foodBooking.foodCount}"></span></p>
+        </th:block>
         <div class="divider"></div>
-        <p><strong>Giá vé:</strong> 249.090 đ</p>
-        <p><strong>Bắp nước:</strong> 89.000 đ</p>
-        <p><strong>Giảm giá:</strong> 0 đ</p>
-        <p><strong>Thẻ quà tặng/eGift:</strong> 0 đ</p>
+        <p><strong>Giá vé:</strong> <span th:text="${#numbers.formatDecimal(booking.totalSeatPrice, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
+        <p><strong>Bắp nước:</strong> <span th:text="${#numbers.formatDecimal(booking.totalFoodPrice, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
+        <p><strong>Giảm giá:</strong> <span th:text="${#numbers.formatDecimal(booking.getDiscount(), 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
+        <p><strong>Thẻ quà tặng/eGift:</strong> <span>0</span></p>
         <div class="divider"></div>
-        <p class="total-price">Tổng cộng: 338.090 đ</p>
+        <p class="total-price">Tổng cộng: <span th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
+    </div>
+
+    <div class="ticket-details" th:if="${#locale.getLanguage() == 'en'}">
+        <div class="divider"></div>
+        <p><strong>Screen:</strong> <span th:text="${booking.screen.name}"></span></p>
+        <p><strong>Seat:</strong> <span th:text="${booking.getSeats()}"></span></p>
+        <th:block th:each="foodBooking : ${booking.getBookingFoods()}">
+            <p><strong th:text="${foodBooking.foodName}">MY COMBO MR 2022:</strong>: <span th:text="${foodBooking.foodCount}"></span></p>
+        </th:block>
+        <div class="divider"></div>
+        <p><strong>Ticket Price:</strong> <span th:text="${#numbers.formatDecimal(booking.totalSeatPrice, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
+        <p><strong>Combo:</strong> <span th:text="${#numbers.formatDecimal(booking.totalFoodPrice, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
+        <p><strong>Discount:</strong> <span th:text="${#numbers.formatDecimal(booking.getDiscount(), 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
+        <p><strong>eGift:</strong> <span>0</span></p>
+        <div class="divider"></div>
+        <p class="total-price">Total Price: <span th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
     </div>
 
     <div class="qr-code">
-        <img src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=813860624" alt="QR Code">
+        <img src="https://static.vecteezy.com/system/resources/previews/002/557/391/original/qr-code-for-scanning-free-vector.jpg" alt="QR Code">
     </div>
 
-    <p class="note">Vui lòng đưa mã số này đến quầy vé CGV để nhận vé của bạn</p>
+    <p class="note" th:if="${#locale.getLanguage() == 'vi'}">Vui lòng đưa mã số này đến quầy vé CGV để nhận vé của bạn</p>
+    <p class="note" th:if="${#locale.getLanguage() == 'en'}">Please present this code to the CGV ticket counter to receive your ticket.</p>
 </div>
 </body>
 </html>

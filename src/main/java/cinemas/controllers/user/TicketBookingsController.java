@@ -4,7 +4,9 @@ import cinemas.dtos.FoodSelectionDto;
 import cinemas.dtos.FoodSelectionFormDto;
 import cinemas.dtos.SeatSelectionDto;
 import cinemas.dtos.SeatSelectionFormDto;
+import cinemas.exceptions.BookingNotFoundException;
 import cinemas.exceptions.ShowtimeNotFoundException;
+import cinemas.exceptions.UserNotFoundException;
 import cinemas.models.*;
 import cinemas.services.*;
 import cinemas.utils.BookingUtils;
@@ -27,6 +29,8 @@ public class TicketBookingsController {
     private FoodsService foodsService;
     @Autowired
     private SeatsService seatsService;
+    @Autowired
+    private BookingsService bookingsService;
     @Autowired
     private UsersService usersService;
 
@@ -79,4 +83,31 @@ public class TicketBookingsController {
         return "user/foods/index";
     }
 
+    @PostMapping("showtimes/{id}/payments")
+    public String showPayments(@PathVariable("id") Integer showtimeId, @ModelAttribute("foodSelectionForm") FoodSelectionFormDto foodSelectionFormDto, HttpSession session, Model model) throws ShowtimeNotFoundException {
+        Showtime showtime = showtimesService.findById(showtimeId);
+        if(showtime==null){
+            throw new ShowtimeNotFoundException();
+        }
+        User user = (User) session.getAttribute("user");
+        user = usersService.findById(user.getId());
+        var seatSelectionForm = (SeatSelectionFormDto) session.getAttribute("seatSelectionForm");
+        session.setAttribute("foodSelectionForm", foodSelectionFormDto);
+        model.addAttribute("seatSelectionForm", seatSelectionForm);
+        model.addAttribute("foodSelectionForm", foodSelectionFormDto);
+        model.addAttribute("showtime", showtime);
+        model.addAttribute("user", user);
+        return "user/payments/index";
+    }
+
+    @PostMapping("showtimes/{id}/confirm-payment")
+    public String confirmPayment(@PathVariable("id") Integer showtimeId, @RequestParam("point_used") Integer pointUsed, HttpSession session, Model model) throws BookingNotFoundException, UserNotFoundException {
+        var seatSelectionForm = (SeatSelectionFormDto) session.getAttribute("seatSelectionForm");
+        var foodSelectionForm = (FoodSelectionFormDto) session.getAttribute("foodSelectionForm");
+        User user = (User) session.getAttribute("user");
+        var booking = bookingsService.createBooking(seatSelectionForm, foodSelectionForm, pointUsed, user.getId(), showtimeId);
+//        Giả sử đã thanh toán thì gọi update
+        bookingsService.updateBookingOnPaymentSuccess(booking.getId());
+        return "redirect:/users/bookings/" + booking.getId();
+    }
 }

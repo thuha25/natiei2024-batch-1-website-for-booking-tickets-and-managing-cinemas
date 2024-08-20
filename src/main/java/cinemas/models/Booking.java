@@ -17,21 +17,24 @@ public class Booking extends CreationUpdationAuditableEntity {
     private String customerName;
     private Integer amount;
     @Enumerated(EnumType.ORDINAL)
-    private BookingStatusEnum status = BookingStatusEnum.BOOKED; // 0 = booked, 1 = printed, 2 = refunded
+    private BookingStatusEnum status = BookingStatusEnum.BOOKED;
 
     @ManyToOne
-    @JoinColumn(name = "showtime_id", insertable = false, updatable = false)
+    @JoinColumn(name = "showtime_id")
     private Showtime showtime;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id")
     private User customer;
 
     @OneToMany(mappedBy = "booking")
     private Set<ShowtimeSeat> bookingSeats;
 
-    @OneToMany(mappedBy = "booking")
+    @OneToMany(mappedBy = "booking", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<BookingFood> bookingFoods;
+
+    @Column(name = "point_used")
+    private Integer pointUsed = 0;
 
     // Getters and Setters
     public Integer getId() {
@@ -96,5 +99,13 @@ public class Booking extends CreationUpdationAuditableEntity {
 
     public void setBookingFoods(Set<BookingFood> bookingFoods) {
         this.bookingFoods = bookingFoods;
+    }
+
+    public Integer getPointUsed() {
+        return pointUsed;
+    }
+
+    public void setPointUsed(Integer pointUsed) {
+        this.pointUsed = pointUsed;
     }
 }

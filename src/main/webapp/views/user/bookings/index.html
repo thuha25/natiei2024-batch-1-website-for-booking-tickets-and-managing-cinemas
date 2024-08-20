@@ -7,41 +7,36 @@
     <h4> LỊCH SỬ </h4>
 </div>
 <form>
-    <div class="card">
-        <div class="row g-0">
-            <div class="col-md-2">
-                <img src="https://example.com/minions.jpg" class="img-fluid rounded-start" alt="Kẻ Trộm Mặt Trăng 4">
-            </div>
-            <div class="col-md-10">
-                <div class="card-body">
-                    <h5 class="card-title">Mã Đặt Vé: 813860624 (Trạng thái: Hoàn Tất)</h5>
-                    <p class="card-text"><strong>Kẻ Trộm Mặt Trăng 4</strong></p>
-                    <p class="card-text">07/07/2024<br>From 18:40 PM ~ To 20:35 PM<br>CGV Vincom Da Nang, Cinema 3 (K10,
-                        K9)</p>
-                    <p class="card-text"><strong>338,090.00 đ</strong></p>
-                    <a th:href="@{/users/bookings/{id}}" class="btn btn-primary">Xem</a>
+    <th:block th:each="booking : ${bookings}">
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-md-2">
+                    <img th:src="${booking.movie.photoUrl}" class="img-fluid rounded-start" alt="Kẻ Trộm Mặt Trăng 4">
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body" th:if="${#locale.getLanguage() == 'vi'}">
+                        <h5 class="card-title">Mã Đặt Vé: <span th:text="${booking.id}">813860624</span></h5>
+                        <p class="card-text"><strong th:text="${booking.movie.titleVn}">Kẻ Trộm Mặt Trăng 4</strong></p>
+                        <p class="card-text">Ngày: <span th:text="${booking.showtime.startTime.toLocalDate()}">07/07/2024</span>
+                            <br>Suất chiếu: <span th:text="${booking.showtime.startTime.toLocalTime()}"></span>
+                            <br>Rạp chiếu: <span th:text="${booking.theater.name}">CGV Vincom Da Nang, Cinema 3</span></p>
+                        <p class="card-text">Tổng tiền<strong th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">338,090.00 đ</strong></p>
+                        <a th:href="@{/users/bookings/{id}(id=${booking.id})}" class="btn btn-primary">Xem</a>
+                    </div>
+
+                    <div class="card-body" th:if="${#locale.getLanguage() == 'en'}">
+                        <h5 class="card-title">Booking Code: <span th:text="${booking.id}">813860624</span></h5>
+                        <p class="card-text"><strong th:text="${booking.movie.titleVn}">Kẻ Trộm Mặt Trăng 4</strong></p>
+                        <p class="card-text">Date: <span th:text="${booking.showtime.startTime.toLocalDate()}">07/07/2024</span>
+                            <br>Showtime: <span th:text="${booking.showtime.startTime.toLocalTime()}"></span>
+                            <br>Theater: <span th:text="${booking.theater.name}">CGV Vincom Da Nang, Cinema 3</span></p>
+                        <p class="card-text">Total amount<strong th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">338,090.00 đ</strong></p>
+                        <a th:href="@{/users/bookings/{id}(id=${booking.id})}" class="btn btn-primary">View</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="row g-0">
-            <div class="col-md-2">
-                <img src="https://example.com/doraemon.jpg" class="img-fluid rounded-start"
-                     alt="Doraemon: Nobita và Bản Giao Hưởng Địa Cầu">
-            </div>
-            <div class="col-md-10">
-                <div class="card-body">
-                    <h5 class="card-title">Mã Đặt Vé: 639955442 (Trạng thái: Hoàn Tất)</h5>
-                    <p class="card-text"><strong>Phim Điện Ảnh Doraemon: Nobita và Bản Giao Hưởng Địa Cầu</strong></p>
-                    <p class="card-text">27/05/2024<br>From 20:30 PM ~ To 22:42 PM<br>CGV Vinh Trung Plaza, Cinema 1
-                        (M8, M9)</p>
-                    <p class="card-text"><strong>229,000.00 đ</strong></p>
-                    <a th:href="@{/users/bookings/{id}}" class="btn btn-primary">Xem</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    </th:block>
 </form>
 </body>
 </html>

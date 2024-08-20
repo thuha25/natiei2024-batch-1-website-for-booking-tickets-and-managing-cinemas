@@ -6,6 +6,7 @@ import cinemas.models.Screen;
 import cinemas.models.Showtime;
 import cinemas.models.Theater;
 import cinemas.repositories.BookingsRepository;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
@@ -54,5 +55,22 @@ public class BookingsRepositoryImpl extends BaseRepositoryImpl<Booking, Integer>
 
         TypedQuery<Booking> query = entityManager.createQuery(cq);
         return query.getResultList();
+    }
+    @Override
+    public Booking findBookingByUser(int userId, int bookingId){
+        String hql = "FROM Booking b WHERE b.id = :bookingId AND b.customer.id = :userId";
+        Query query = entityManager.createQuery(hql, Booking.class);
+        query.setParameter("bookingId", bookingId);
+        query.setParameter("userId", userId);
+
+        return (Booking) query.getSingleResult();
+    }
+    @Override
+    public List<Booking> findBookingsByUser(int userId){
+        String hql = "FROM Booking b WHERE b.customer.id = :userId";
+        List<Booking> bookings = entityManager.createQuery(hql, Booking.class)
+                .setParameter("userId", userId)
+                .getResultList();
+        return bookings;
     }
 }

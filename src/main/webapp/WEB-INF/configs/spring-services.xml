@@ -91,4 +91,14 @@
       </bean>
     </property>
   </bean>
+  <bean id="bookingsService" parent="baseTransactionProxy">
+    <property name="target">
+      <bean class="cinemas.services.impl.BookingsServiceImpl">
+        <constructor-arg ref="bookingsRepository" />
+        <constructor-arg ref="showtimesRepository" />
+        <constructor-arg ref="usersRepository"/>
+        <constructor-arg ref="showtimeSeatsRepository" />
+      </bean>
+    </property>
+  </bean>
 </beans>
