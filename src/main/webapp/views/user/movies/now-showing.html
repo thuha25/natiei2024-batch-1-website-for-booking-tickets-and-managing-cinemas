@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/user/layout}">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title th:text="#{user.movies.now-showing.title}">Title</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,10 +14,24 @@
       color: #333;
     }
   </style>
+  <link rel="stylesheet" th:href="@{/assets/user/css/now-showing.css}">
+  <link rel="stylesheet" th:href="@{/assets/user/css/up-coming.css}">
 </head>
 <body>
 <section layout:fragment="body">
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v20.0" nonce="cwp7ACxj"></script>
-  <div th:insert="~{components/now-showing}"></div>
+  <div class="now-showing-page">
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-6">
+          <div class="now" th:text="#{user.movies.now}">Phim Đang Chiếu</div>
+        </div>
+        <div class="col-6 text-right">
+          <div class="soon"><a th:href="@{/movies/up-coming}" th:text="#{user.movies.coming}">Phim Sắp Chiếu</a></div>
+        </div>
+      </div>
+      <hr>
+      <section th:replace="~{components/user-movie-list.html}"></section>
+    </div>
+  </div>
 </section>
 </body>

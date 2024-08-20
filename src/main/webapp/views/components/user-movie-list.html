@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div class="row">
+    <div th:each="movie : ${movies}" class="col-md-3 col-sm-6 mb-4">
+        <a th:href="@{/movies/{id}(id=${movie.id})}" class="card-link">
+            <div class="card">
+                <div class="card-img-top position-relative">
+                    <img th:src="@{${movie.photoUrl}}" class="img-fluid" alt="Poster">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${movie.getTitle()}">Tiêu đề phim</h5>
+                    <p class="card-text">
+                        <strong th:text="#{user.movies.genre}">Thể loại:</strong> <span th:text="${movie.getGenresName()}">Hành động</span><br>
+                        <strong th:text="#{user.movies.duration}">Thời lượng:</strong> <span th:text="${movie.runningTime}">Thời lượng</span>&nbsp;<span th:text="#{user.movies.minutes}">phút</span><br>
+                    </p>
+                    <div class="row text-center">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <a th:href="@{#}" class="btn btn-danger btn-sm" th:text="#{user.movies.booking}">Mua Vé</a>
+                            <div class="fb-like" th:data-href="@{/movies/{id}(id=${movie.id})}" data-width="16" data-layout="button_count"
+                                 data-action="like" data-size="small" data-share="false"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+</html>

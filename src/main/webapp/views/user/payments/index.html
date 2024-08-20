@@ -21,39 +21,39 @@
                     <li id="opc-1" class="section">
                         <div class="step-title">
                             <h2>
-                                <span class="class-step-payment">Bước 1: </span>Giảm giá
+                                <span class="class-step-payment" th:text="#{user.payments.step-1}">Bước 1</span>: <span th:text="#{user.payments.discount}">Giảm giá</span>
                             </h2>
                         </div>
                         <div id="checkout-step-1" class="step">
                             <dl class="checkout-discount-method">
                                 <dt id="dt_method_1">
-                                    Điểm CGV
+                                    <span th:text="#{user.payments.cgv-point}">Điểm CGV</span>
                                 </dt>
                                 <dd id="dd_method_1">
                                     <div class="col1-set">
                                         <div class="p-2">
                                             <div class="content">
-                                                <p th:text="'Bạn có: ' + ${user.rewardPoints} + ' P'">Bạn có: 0 P</p>
+                                                <p><span th:text="#{user.payments.you-have}">Bạn có</span>: <span th:text="${user.rewardPoints}">0</span> P</p>
                                                 <div class="input-box">
                                                     <input type="number" min="0" th:max="${user.rewardPoints}" name="point_used" value="0" title="" class="points-input" id="point_input">
-                                                    <button type="button" class="btn btn-buy-cover points-button text-white" id="btn_point_use">
+                                                    <button type="button" class="btn btn-buy-cover points-button text-white" id="btn_point_use" th:text="#{user.payments.use}">
                                                         Sử dụng
                                                     </button>
                                                 </div>
-                                                <p class="discount-chose-points text-right">Giảm giá : <span
+                                                <p class="discount-chose-points text-right"><span th:text="#{user.payments.discount}">Giảm giá</span> : <span
                                                         class="price" id="discount_point">0,00&nbsp;₫</span></p>
                                             </div>
                                         </div>
                                     </div>
                                 </dd>
-                                <dt id="dt_method_2">
+                                <dt id="dt_method_2" th:text="#{user.payments.voucher}">
                                     Mã Khuyến Mãi
                                 </dt>
                                 <dd id="dd_method_2">
                                     <div class="promo-verification">
-                                        <label>Nhập mã khuyến mãi</label>
+                                        <label th:text="#{user.payments.typing-voucher}">Nhập mã khuyến mãi</label>
                                         <input name="code" title="code" class="input-text" type="text">
-                                        <button type="button" class="btn btn-buy-cover text-white">Sử dụng</button>
+                                        <button type="button" class="btn btn-buy-cover text-white" th:text="#{user.payments.use}">Sử dụng</button>
                                     </div>
                                 </dd>
                             </dl>
@@ -62,7 +62,7 @@
                     <li id="opc-2" class="section">
                         <div class="step-title">
                             <h2>
-                                <span class="class-step-payment">Bước 2: </span>Hình thức thanh toán
+                                <span class="class-step-payment"><span th:text="#{user.payments.step-2}">Bước 2</span>: </span><span th:text="#{user.payments.payment-method}">Hình thức thanh toán</span>
                             </h2>
                         </div>
                         <div id="checkout-step-2" class="step">
@@ -90,7 +90,7 @@
                         <div class="form-group checkbox">
                             <label>
                                 <input type="checkbox">
-                                <a>Tôi đồng ý với điều khoản sử dụng và mua vé cho người có độ tuổi phù hợp </a>
+                                <a th:text="#{user.payments.agreement}">Tôi đồng ý với điều khoản sử dụng và mua vé cho người có độ tuổi phù hợp </a>
                             </label>
                         </div>
                     </li>
@@ -102,14 +102,14 @@
                         <table class="data-table">
                             <thead>
                             <tr>
-                                <td colspan="2">Tổng cộng</td>
+                                <td colspan="2" th:text="#{user.payments.total}">Tổng cộng</td>
                             </tr>
                             </thead>
 
                             <tbody>
                             <tr>
                                 <td>
-                                    Giá vé:
+                                    <span th:text="#{user.payments.ticket-price}">Giá vé</span>:
                                 </td>
                                 <td>
                                     <span class="price" th:text="${#numbers.formatDecimal(seatSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">124.909,00&nbsp;₫</span></td>
@@ -139,7 +139,7 @@
                         <table class="data-table">
                             <thead>
                             <tr>
-                                <td colspan="2">Khuyến mãi</td>
+                                <td colspan="2"><span th:text="#{user.payments.voucher}">Khuyến mãi</span></td>
                             </tr>
                             </thead>
 
@@ -156,7 +156,7 @@
                         <table class="data-table">
                             <thead>
                             <tr>
-                                <td colspan="2">Tổng số tiền thanh toán</td>
+                                <td colspan="2" th:text="#{user.payments.total-payment}">Tổng số tiền thanh toán</td>
                             </tr>
                             </thead>
 
@@ -190,7 +190,7 @@
             </div>
         </div>
         <a href="#" class="d-flex justify-content-center pt-5">
-            <button type="submit" class="btn text-white" style="background-color: orangered">Thanh toán</button>
+            <button type="submit" class="btn text-white" style="background-color: orangered" th:text="#{user.payments.purchase}">Thanh toán</button>
         </a>
     </form>
 </section>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/user/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CGV</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,18 +18,15 @@
 </head>
 <body>
 <section layout:fragment="body">
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v20.0" nonce="cwp7ACxj"></script>
-
     <div class="main">
         <div class="col-main">
             <div class="product-view">
                 <div class="product-essential">
                     <div class="page-title product-view">
-                        <h1>Nội dung phim</h1>
+                        <h1 th:text="#{user.movies.movie-content}">Nội dung phim</h1>
                     </div>
                     <div class="product-name-reponsive">
-                        <h1 th:text="${movie.titleVn}">PHIM ĐIỆN ẢNH THÁM TỬ LỪNG DANH CONAN: NGÔI SAO 5 CÁNH 1 TRIỆU ĐÔ</h1>
+                        <h1 th:text="${movie.getTitle()}">PHIM ĐIỆN ẢNH THÁM TỬ LỪNG DANH CONAN: NGÔI SAO 5 CÁNH 1 TRIỆU ĐÔ</h1>
                     </div>
                     <div class="shop-img">
                         <div class="product-img-box">
@@ -37,52 +34,49 @@
                         </div>
                         <div class="product-shop">
                             <div class="movie-director movie-info">
-                                <label>Đạo diễn: </label>
+                                <label th:text="#{user.movies.director}">Đạo diễn: </label>
                                 <div class="std">&nbsp; <span th:text="${movie.director}"></span></div>
                             </div>
 
                             <div class="movie-acstress movie-info">
-                                <label>Diễn viên: </label>
+                                <label th:text="#{user.movies.cast}">Diễn viên: </label>
                                 <div class="std">&nbsp; <span th:text="${movie.cast}"></span></div>
                             </div>
 
                             <div class="movie-genre movie-info">
-                                <label>Thể loại:  </label>
-                                <div class="std">
-                                    &nbsp;
-                                    <span th:each="genre : ${movie.genres}" th:text="${genre.nameVn} + ', '"></span>
-                                </div>
+                                <label th:text="#{user.movies.genres}">Thể loại:  </label>
+                                <div class="std">&nbsp; <span th:text="${movie.getGenresName()}"></span></div>
                             </div>
 
                             <div class="movie-release movie-info">
-                                <label>Khởi chiếu: </label>
+                                <label th:text="#{user.movies.start-time}">Khởi chiếu: </label>
                                 <div class="std">&nbsp; <span th:text="${#temporals.format(movie.releaseDate, 'dd/MM/yyyy')}"></span>
                                 </div>
                             </div>
 
                             <div class="movie-time movie-info">
-                                <label>Thời lượng: </label>
-                                <div class="std">&nbsp; <span th:text="${movie.runningTime}"></span> phút</div>
+                                <label th:text="#{user.movies.duration}">Thời lượng: </label>
+                                <div class="std">&nbsp; <span th:text="${movie.runningTime}"></span>&nbsp;<span th:text="#{user.movies.minutes}">phút</span></div>
                             </div>
 
                             <div class="movie-language movie-info">
-                                <label>Ngôn ngữ: </label>
-                                <div class="std">&nbsp; <span th:text="${movie.languageVn}"></span></div>
+                                <label th:text="#{user.movies.language}">Ngôn ngữ: </label>
+                                <div class="std">&nbsp; <span th:text="${movie.getLanguage()}"></span></div>
                             </div>
 
                             <div class="movie-rating movie-info">
                                 <label>Rated: </label>
-                                <div class="std">&nbsp; T<span th:text="${movie.ageLimit}"></span> - Phim được phổ biến đến người xem từ đủ <span th:text="${movie.ageLimit}"></span> tuổi trở lên</div>
+                                <div class="std">&nbsp; T<span th:text="${movie.ageLimit}"></span>&nbsp;-&nbsp;<span th:text="#{user.movies.age-limit-1}"> Phim được phổ biến đến người xem từ đủ</span>&nbsp;<span th:text="${movie.ageLimit}"></span>&nbsp;<span th:text="#{user.movies.age-limit-2}">tuổi trở lên</span></div>
                             </div>
                         </div>
                     </div>
-                    <div class="fb-like" data-href="/" data-width="15" data-layout="button_count" data-action="like" data-size="small" data-share="false"></div>
+                    <div class="fb-like" th:data-href="@{/movies/{id}(id=${movie.id})}" data-width="15" data-layout="button_count" data-action="like" data-size="small" data-share="false"></div>
                     <div class="movie-detail-fb-booking">
                         <div class="btn-buy-cover">
-                            <a class="btn btn-trailer" th:href="@{${movie.trailer}}" target="_blank">Trailer</a>
+                            <a class="btn btn-trailer" th:href="@{${movie.trailer}}" target="_blank">TRAILER</a>
                         </div>
                         <div class="btn-buy-cover">
-                            <button class="btn btn-buy" data-toggle="modal" data-target="#exampleModalLong" th:attr="data-movie-id=${movie.id}">Mua vé</button>
+                            <button class="btn btn-buy" data-toggle="modal" data-target="#exampleModalLong" th:attr="data-movie-id=${movie.id}" th:text="#{user.movies.booking}">Mua vé</button>
                         </div>
                     </div>
                     <div class="product-collateral">

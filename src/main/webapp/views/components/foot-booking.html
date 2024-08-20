@@ -22,7 +22,7 @@
               <table class="info-wrapper">
                 <tbody>
                 <tr>
-                  <td class="label" th:text="${showtime.movie.titleVn}">
+                  <td class="label" th:text="${showtime.movie.getTitle()}">
                     PHIM ĐIỆN ẢNH THÁM TỬ LỪNG DANH CONAN: NGÔI SAO 5 CÁNH 1
                     TRIỆU ĐÔ
                   </td>
@@ -43,21 +43,21 @@
         <table class="info-wrapper">
           <tbody>
           <tr>
-            <td class="label">Rạp</td>
+            <td class="label" th:text="#{components.foot-booking.theater}">Rạp</td>
             <td th:text="${showtime.screen.theater.name}">CGV Hùng Vương Plaza</td>
           </tr>
           <tr>
-            <td class="label" >Suất chiếu</td>
+            <td class="label" th:text="#{components.foot-booking.showtime}">Suất chiếu</td>
             <td th:text="|${showtime.startTime.toLocalTime()} - ${showtime.startTime.toLocalDate()}|">
               21:50, 11/08/2024
             </td>
           </tr>
           <tr>
-            <td class="label">Phòng chiếu</td>
+            <td class="label" th:text="#{components.foot-booking.screen}">Phòng chiếu</td>
             <td th:text="${showtime.screen.name}">Phong 9</td>
           </tr>
           <tr class="block-seats" style="">
-            <td class="label">Ghế</td>
+            <td class="label" th:text="#{components.foot-booking.seat}">Ghế</td>
             <td class="data" id="total_seats_array">
               <div style="display: flex; flex-wrap: wrap;">
                 <th:block th:each="entry : ${seatSelectionForm.getSeatSelectionsDto()}">
@@ -75,7 +75,7 @@
         <table class="info-wrapper">
           <thead>
           <tr class="block-box">
-            <td class="label">Giá ghế</td>
+            <td class="label" th:text="#{components.foot-booking.seat-price}">Giá ghế</td>
             <td class="price" id="seat_ticket_price" th:text="${#numbers.formatDecimal(seatSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">120.000₫</td>
           </tr>
           </thead>
@@ -85,13 +85,13 @@
             <td class="price" id="combo_ticket_price" th:text="${#numbers.formatDecimal(foodSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">0,00&nbsp;₫</td>
           </tr>
           <tr class="block-con">
-            <td class="label">Khuyến mãi</td>
+            <td class="label" th:text="#{components.foot-booking.discount}">Khuyến mãi</td>
             <td class="price" id="discount_ticket_price" >0,00&nbsp;₫</td>
           </tr>
           </tbody>
           <tfoot class="block-price">
           <tr>
-            <td class="label">Tổng</td>
+            <td class="label" th:text="#{components.foot-booking.total}">Tổng</td>
             <td class="price" colspan="2" id="final_ticket_price" th:text="${#numbers.formatDecimal(seatSelectionForm.getTotalPrice() + foodSelectionForm.getTotalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'"
                 ></td>
           </tr>

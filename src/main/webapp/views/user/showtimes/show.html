@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/user/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Select Chair</title>
+    <title>CGV</title>
     <link rel="stylesheet" th:href="@{/assets/user/css/ticket_booking.css}">
     <script th:src="@{/assets/user/js/seat-booking.js}"></script>
 </head>
@@ -16,24 +16,16 @@
             <div class="col-md-12 col-xs-12 col-sm-12">
                 <div class="block">
                     <div class="line top">
-                        <div>Bước 1: Chọn Ghế</div>
+                        <div th:text="#{user.showtimes.step-1}">Bước 1: Chọn Ghế</div>
                     </div>
 
                     <form id="form-chonghe" th:action="@{#}" method="POST">
                         <div class="block-body">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-md-2 col-xs-12 col-sm-12">
-                                        <h3 th:text="${showtime.movie.titleVn}">Tên phim</h3>
-                                        <p><img th:src="@{${showtime.movie.photoUrl}}" align="left" height="160" width="140" alt="" src=""/></p>
-                                        <p>Phòng chiếu: <label th:text="${showtime.screen.name}">Phòng chiếu</label></p>
-                                        <p>Ngày: <label th:text="${showtime.startTime.toLocalDate()}">Ngày</label></p>
-                                        <p>Suất chiếu: <label th:text="${showtime.startTime.toLocalTime()}">14:00</label></p>
-                                        <p>Rạp: <label th:text="${showtime.screen.theater.name}">Tên Rạp</label></p>
-                                    </div>
+                                <div class="row justify-content-center">
                                     <div class="col-md-8 col-xs-12 col-sm-12">
                                         <div>
-                                            <p style="text-align:center;color:gray;font-weight:bold;font-size:x-large; margin-bottom: 0">
+                                            <p style="text-align:center;color:gray;font-weight:bold;font-size:x-large; margin-bottom: 0" th:text="#{user.showtimes.center-screen}">
                                                 SCREEN</p>
                                             <p style="width:360px;background-color:gray;height:5px;margin: 0 auto 10px;"></p>
                                         </div>
@@ -59,34 +51,45 @@
                                             </div>
                                         </ul>
                                     </div>
-                                    <div class="col-md-2 col-xs-12 col-sm-12">
-                                        <table style="border:1px solid black;">
+                                </div>
+                                <div class="row justify-content-center mt-5">
+                                        <table class="col-md-8 col-xs-12 col-sm-12">
+                                            <!-- Row 1 -->
                                             <tr>
-                                                <td class="text-center" colspan="2"><label>Chú thích</label></td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center;">
+                                                    <p style="width:20px;height:20px;background-color:#278ac7; margin-right: 10px;"></p>
+                                                    <label th:text="#{user.showtimes.seat-standart}">Ghế đơn</label></div>
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center;">
+                                                    <p style="width:20px;height:20px;background-color:#bbbbbb; margin-right: 10px;"></p>
+                                                        <label th:text="#{user.showtimes.seat-sold}">Ghế đã bán</label></div>
+                                                </td>
                                             </tr>
+                                            <!-- Row 2 -->
                                             <tr>
-                                                <td><p style="width:20px;height:20px;background-color:#278ac7"></p></td>
-                                                <td><label>Ghế đơn</label></td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center;">
+                                                    <p style="width:20px;height:20px;background-color:#01c73c; margin-right: 10px;"></p>
+                                                        <label th:text="#{user.showtimes.seat-vip}">Ghế vip</label></div>
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center;">
+                                                    <p style="width:20px;height:20px;background-color:#343433; margin-right: 10px;"></p>
+                                                        <label th:text="#{user.showtimes.seat-unavailable}">Ghế không thể chọn</label></div>
+                                                </td>
                                             </tr>
+                                            <!-- Row 3 (with a placeholder for balance) -->
                                             <tr>
-                                                <td><p style="width:20px;height:20px;background-color:#01c73c"></p></td>
-                                                <td><label>Ghế vip</label></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><p style="width:20px;height:20px;background-color:#bbbbbb"></p></td>
-                                                <td><label>Ghế đã bán</label></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p style="width:20px;height:20px;background-color:#b11500"></p></td>
-                                                <td><label>Ghế đang chọn</label></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p style="width:20px;height:20px;background-color:#343433"></p></td>
-                                                <td><label>Ghế không thể chọn</label></td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center;">
+                                                    <p style="width:20px;height:20px;background-color:#b11500; margin-right: 10px;"></p>
+                                                        <label>Checked</label></div>
+                                                </td>
+                                                <td></td> <!-- Empty cell to complete the layout if needed -->
                                             </tr>
                                         </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>

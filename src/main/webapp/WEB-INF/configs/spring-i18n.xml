@@ -18,6 +18,8 @@
     <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
       <property name="paramName" value="lang"/>
     </bean>
+    <!-- Add Locale Interceptor -->
+    <bean class="cinemas.interceptors.LocaleInterceptor"/>
   </mvc:interceptors>
 
   <!-- Locale Resolver Bean -->

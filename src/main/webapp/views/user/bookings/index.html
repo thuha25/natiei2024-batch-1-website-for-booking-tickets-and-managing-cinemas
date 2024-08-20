@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/user/info-layout}">
 <body layout:fragment="info-layout-body">
 <div class="form-title">
-    <h4> LỊCH SỬ </h4>
+    <h4 th:text="#{user.bookings.history}"> LỊCH SỬ </h4>
 </div>
 <form>
     <th:block th:each="booking : ${bookings}">
@@ -14,24 +14,14 @@
                     <img th:src="${booking.movie.photoUrl}" class="img-fluid rounded-start" alt="Kẻ Trộm Mặt Trăng 4">
                 </div>
                 <div class="col-md-10">
-                    <div class="card-body" th:if="${#locale.getLanguage() == 'vi'}">
-                        <h5 class="card-title">Mã Đặt Vé: <span th:text="${booking.id}">813860624</span></h5>
-                        <p class="card-text"><strong th:text="${booking.movie.titleVn}">Kẻ Trộm Mặt Trăng 4</strong></p>
-                        <p class="card-text">Ngày: <span th:text="${booking.showtime.startTime.toLocalDate()}">07/07/2024</span>
-                            <br>Suất chiếu: <span th:text="${booking.showtime.startTime.toLocalTime()}"></span>
-                            <br>Rạp chiếu: <span th:text="${booking.theater.name}">CGV Vincom Da Nang, Cinema 3</span></p>
-                        <p class="card-text">Tổng tiền<strong th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">338,090.00 đ</strong></p>
-                        <a th:href="@{/users/bookings/{id}(id=${booking.id})}" class="btn btn-primary">Xem</a>
-                    </div>
-
-                    <div class="card-body" th:if="${#locale.getLanguage() == 'en'}">
-                        <h5 class="card-title">Booking Code: <span th:text="${booking.id}">813860624</span></h5>
-                        <p class="card-text"><strong th:text="${booking.movie.titleVn}">Kẻ Trộm Mặt Trăng 4</strong></p>
-                        <p class="card-text">Date: <span th:text="${booking.showtime.startTime.toLocalDate()}">07/07/2024</span>
-                            <br>Showtime: <span th:text="${booking.showtime.startTime.toLocalTime()}"></span>
-                            <br>Theater: <span th:text="${booking.theater.name}">CGV Vincom Da Nang, Cinema 3</span></p>
-                        <p class="card-text">Total amount<strong th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">338,090.00 đ</strong></p>
-                        <a th:href="@{/users/bookings/{id}(id=${booking.id})}" class="btn btn-primary">View</a>
+                    <div class="card-body">
+                        <h5 class="card-title"><span th:text="#{user.bookings.id}">Mã Đặt Vé</span>: <span th:text="${booking.id}">813860624</span></h5>
+                        <p class="card-text"><strong th:text="${booking.movie.getTitle()}">Kẻ Trộm Mặt Trăng 4</strong></p>
+                        <p class="card-text"><span th:text="#{user.bookings.date}">Ngày</span>: <span th:text="${booking.showtime.startTime.toLocalDate()}">07/07/2024</span>
+                            <br><span th:text="#{user.bookings.showtime}">Suất chiếu</span>: <span th:text="${booking.showtime.startTime.toLocalTime()}"></span>
+                            <br><span th:text="#{user.bookings.theater}">Rạp chiếu</span>: <span th:text="${booking.theater.name}">CGV Vincom Da Nang, Cinema 3</span></p>
+                        <p class="card-text"><span th:text="#{user.bookings.total-price}">Tổng tiền</span>&nbsp;<strong th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">338,090.00 đ</strong></p>
+                        <a th:href="@{/users/bookings/{id}(id=${booking.id})}" class="btn btn-primary" th:text="#{user.bookings.view-details}">Xem</a>
                     </div>
                 </div>
             </div>

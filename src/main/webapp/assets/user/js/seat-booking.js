@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var combo_price = 0;
     let seat_array = [];
     seats.forEach(seat => {
-        console.log(JSON.parse(seat.getAttribute('data-seat')));
         setSeatColor(seat);
     });
     window.addEventListener('pageshow', function(event) {
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const seatType = seat.getAttribute('data-seat-type');
         const available = seat.getAttribute('data-available') === 'true';
         const selected = seat.getAttribute('data-selected') === 'true';
-        console.log(seat , seatType, available, selected);
         let backgroundColor = '';
 
         if (!available) {

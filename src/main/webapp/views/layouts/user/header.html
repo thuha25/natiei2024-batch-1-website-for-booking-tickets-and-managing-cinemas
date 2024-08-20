@@ -1,70 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-</head>
-<body>
-<header class="text-white text-center py-3">
-    <div class="header-container">
+  <head> </head>
+  <body>
+    <header class="text-white text-center py-3">
+      <div class="header-container">
         <div class="logo">
-            <a th:href="@{/}">
-                <img th:src="@{/assets/user/images/cgvlogo.png}" alt="CGV Logo">
-            </a>
+          <a th:href="@{/}">
+            <img th:src="@{/assets/user/images/cgvlogo.png}" alt="CGV Logo" />
+          </a>
         </div>
-        <div class="search-bar">
-            <input type="text" th:placeholder="#{header.search-bar.placeholder}">
-            <button type="submit"><img th:src="@{/assets/user/images/search-icon.png}" alt="Search"></button>
+          <div class="d-flex align-items-center">
+        <div class="language-switch mr-3">
+          <button
+            class="btn"
+            th:classappend="${#locale.language == 'vi' ? ' btn-danger active' : ' btn-secondary'}"
+            onclick="reloadPageWithLanguage('vi', this)"
+          >
+            VI
+          </button>
+          <button
+            class="btn"
+            th:classappend="${#locale.language == 'en' ? ' btn-danger active' : ' btn-secondary'}"
+            onclick="reloadPageWithLanguage('en', this)"
+          >
+            EN
+          </button>
         </div>
-        <div class="language-switch">
-            <button class="btn btn-primary" th:classappend="${#locale.language == 'vi' ? ' active' : ''}"
-                    onclick="reloadPageWithLanguage('vi', this)">VI
-            </button>
-            <button class="btn btn-primary" th:classappend="${#locale.language == 'en' ? ' active' : ''}"
-                    onclick="reloadPageWithLanguage('en', this)">EN
-            </button>
+        <div
+          th:if="${#authorization.expression('isAuthenticated()')}"
+          class="user-info"
+        >
+          <span
+            class="username"
+            th:text="#{user.header.greet(${session.user.getFullName()})}"
+          ></span>
+          <div class="user-dropdown">
+            <a th:href="@{/users/me/info}" th:text="#{user.header.profile}"
+              >Thông tin cá nhân</a
+            >
+            <a th:href="@{/users/me}" th:text="#{user.header.account}"
+              >Tài khoản</a
+            >
+            <a th:href="@{/users/bookings}" th:text="#{user.header.my-bookings}"
+              >Vé của tôi</a
+            >
+            <a th:href="@{/logout}" th:text="#{user.header.logout}"></a>
+          </div>
         </div>
-        <div th:if="${#authorization.expression('isAuthenticated()')}" class="user-info">
-            <span class="username" th:text="#{header.greet(${session.user.getFullName()})}"></span>
-            <div class="user-dropdown">
-                <a th:href="@{/users/me/info}">Thông tin cá nhân</a>
-                <a th:href="@{/users/me}">Tài khoản</a>
-                <a th:href="@{/users/bookings}">Vé của tôi</a>
-                <a th:href="@{/logout}" th:text="#{header.logout}"></a>
-            </div>
+        <div
+          th:unless="${#authorization.expression('isAuthenticated()')}"
+          class="login-prompt"
+        >
+          <a th:href="@{/login}" th:text="#{user.header.login}"></a>
         </div>
-        <div th:unless="${#authorization.expression('isAuthenticated()')}" class="login-prompt">
-            <a th:href="@{/login}" th:text="#{header.login}"></a>
-        </div>
-    </div>
-    <nav class="main-nav">
+          </div>
+      </div>
+      <nav class="main-nav">
         <ul>
-            <li>
-                <a th:href="@{/}">PHIM>></a>
-                <div class="dropdown">
-                    <a th:href="@{/movies/now-showing}">Phim đang chiếu</a>
-                    <a th:href="@{/movies/up-coming}">Phim sắp chiếu</a>
-                </div>
-            </li>
-            <li><a th:href="@{/theaters}">RẠP CGV>></a></li>
-            <li><a th:href="@{/member}">THÀNH VIÊN>></a></li>
+          <li>
+            <a th:href="@{/}"><strong th:text="#{user.header.movie}">PHIM</strong></a>
+            <div class="dropdown">
+              <a th:href="@{/movies/now-showing}" th:text="#{user.header.now-showing}">Phim đang chiếu</a>
+              <a th:href="@{/movies/up-coming}" th:text="#{user.header.coming-soon}">Phim sắp chiếu</a>
+            </div>
+          </li>
+            <li><a th:href="@{/theaters}"><strong th:text="#{user.header.theater}">RẠP CGV</strong></a></li>
+            <li><a th:href="@{#}"><strong th:text="#{user.header.member}">THÀNH VIÊN</strong></a></li>
         </ul>
-    </nav>
-    <script>
+      </nav>
+      <script>
         function reloadPageWithLanguage(lang, element) {
-            if (element.classList.contains('active')) {
-                return;
-            }
+          if (element.classList.contains("active")) {
+            return;
+          }
 
-            const currentUrl = window.location.href;
-            let newUrl;
-            if (currentUrl.includes('?')) {
-                newUrl = `${currentUrl.split('?')[0]}?lang=${lang}`;
-            } else {
-                newUrl = `${currentUrl}?lang=${lang}`;
-            }
-            window.location.href = newUrl;
+          const currentUrl = window.location.href;
+          let newUrl;
+          if (currentUrl.includes("?")) {
+            newUrl = `${currentUrl.split("?")[0]}?lang=${lang}`;
+          } else {
+            newUrl = `${currentUrl}?lang=${lang}`;
+          }
+          window.location.href = newUrl;
         }
-    </script>
-</header>
-
-</body>
+      </script>
+    </header>
+  </body>
 </html>

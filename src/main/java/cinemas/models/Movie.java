@@ -3,6 +3,8 @@ package cinemas.models;
 import cinemas.converters.ZonedDateTimeConverter;
 import cinemas.enums.MovieStatus;
 import cinemas.models.common.SoftDeletableEntity;
+import cinemas.utils.DataTypeUtils;
+import cinemas.utils.LocaleUtils;
 import jakarta.persistence.*;
 
 import java.time.ZonedDateTime;
@@ -43,7 +45,7 @@ public class Movie extends SoftDeletableEntity {
     private String photoUrl;
     @Enumerated(EnumType.ORDINAL)
     private MovieStatus status = MovieStatus.COMING_SOON; // 0 = coming soon, 1 = now showing, 2 = end showing
-    @ManyToMany(mappedBy = "movies",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "movies", fetch = FetchType.EAGER)
     private Set<Genre> genres;
 
     // Getters and Setters
@@ -162,14 +164,32 @@ public class Movie extends SoftDeletableEntity {
     public String getPhotoUrl() {
         return photoUrl;
     }
+
     public MovieStatus getStatus() {
         return status;
     }
+
     public void setStatus(MovieStatus status) {
         this.status = status;
     }
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    public String getTitle() {
+        return LocaleUtils.getTextWithLocale(titleVn, titleEn);
+    }
+
+    public String getLanguage() {
+       return LocaleUtils.getTextWithLocale(languageVn, languageEn);
+    }
+
+    public String getDescription() {
+        return LocaleUtils.getTextWithLocale(descriptionVn, descriptionEn);
+    }
+
+    public String getGenresName() {
+        return genres.stream().map(Genre::getName).reduce((a, b) -> a + ", " + b).orElse("");
     }
 }

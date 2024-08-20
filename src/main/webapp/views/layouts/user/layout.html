@@ -25,7 +25,15 @@
     <script th:src="@{/assets/js/bootstrap.min.js}"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<span class="d-none" id="current_language_code" th:text="${#locale.getLanguage()}"></span></p>
+<div id="fb-root"></div>
+<script
+        async
+        defer
+        crossorigin="anonymous"
+        th:src="'https://connect.facebook.net/' + (${#locale.language == 'vi' ? 'vi_VN' : 'en_US'}) + '/sdk.js#xfbml=1&version=v20.0&appId=416348774893327'"
+        nonce="cwp7ACxj">
+</script>
+<span class="d-none" id="current_language_code" th:text="${#locale.language}"></span></p>
 <!-- Header -->
 <div th:insert="~{layouts/user/header :: header}"></div>
 
