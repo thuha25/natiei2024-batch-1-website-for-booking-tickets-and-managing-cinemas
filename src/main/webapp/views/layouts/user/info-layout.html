@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/user/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CGV</title>
     <link rel="stylesheet" th:href="@{/assets/user/css/my-information.css}">
     <link rel="stylesheet" th:href="@{/assets/user/css/my-ticket.css}">
     <link rel="stylesheet" th:href="@{/assets/user/css/ticket-detail.css}">
@@ -75,19 +75,19 @@
 <section layout:fragment="body">
     <div class="row">
         <div class="sidebar">
-            <h3>TÀI KHOẢN CGV</h3>
+            <h3 th:text="#{layouts.user.info-layout.cgv-account}">TÀI KHOẢN CGV</h3>
             <ul>
                 <li th:classappend="${section == 'info'} ? 'active'">
-                    <a th:href="@{/users/me/info}">Thông tin cá nhân</a>
+                    <a th:href="@{/users/me/info}" th:text="#{layouts.user.info-layout.profile}">Thông tin cá nhân</a>
                 </li>
                 <li th:classappend="${section == 'account'} ? 'active'">
-                    <a th:href="@{/users/me}">Tài khoản</a>
+                    <a th:href="@{/users/me}" th:text="#{layouts.user.info-layout.account}">Tài khoản</a>
                 </li>
                 <li th:classappend="${section == 'booking'|| section == 'booking-detail'} ? 'active'">
-                    <a th:href="@{/users/bookings}">Vé của tôi</a>
+                    <a th:href="@{/users/bookings}" th:text="#{layouts.user.info-layout.my-tickets}">Vé của tôi</a>
                 </li>
                 <li th:classappend="${section == 'voucher'} ? 'active'">
-                    <a th:href="@{/vouchers/me}">Thẻ khuyến mãi</a>
+                    <a th:href="@{/vouchers/me}" th:text="#{layouts.user.info-layout.my-vouchers}">Thẻ khuyến mãi</a>
                 </li>
             </ul>
         </div>

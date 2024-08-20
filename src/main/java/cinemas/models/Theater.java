@@ -1,6 +1,8 @@
 package cinemas.models;
 
 import cinemas.models.common.CreationUpdationAuditableEntity;
+import cinemas.utils.DataTypeUtils;
+import cinemas.utils.LocaleUtils;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -81,5 +83,9 @@ public class Theater extends CreationUpdationAuditableEntity {
 
     public void setScreens(Set<Screen> screens) {
         this.screens = screens;
+    }
+
+    public String getAddress() {
+       return LocaleUtils.getTextWithLocale(addressVn, addressEn);
     }
 }

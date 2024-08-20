@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/user/layout}" lang="">
 <head>
     <meta charset="UTF-8">
-    <title>Select Popcorn and Drinks</title>
+    <title>CGV</title>
     <link rel="stylesheet" th:href="@{/assets/user/css/food.css}">
     <script th:src="@{/assets/user/js/food-booking.js}"></script>
     <script th:src="@{/assets/user/js/count-down.js}"></script>
@@ -50,7 +50,7 @@
                     <form class="main-content" th:action="@{/ticket-bookings/showtimes/{id}/payments(id=${showtime.id})}" method="post" th:object="${foodSelectionForm} ">
                         <ul class="progress">
                             <li class="booking-step">
-                                <label class="h1">Bắp Nước</label>
+                                <label class="h1" th:text="#{user.foods.food}">Bắp Nước</label>
                                 <ol class="products-list">
                                     <li th:each="foodSelection, itemStat : *{foodSelections}" class="item food">
                                         <img th:src="${foodSelection.food.photoUrl}" th:alt="${foodSelection.food.name}" class="product-image">
@@ -59,7 +59,7 @@
                                             <div class="desc std" th:text="${foodSelection.food.description}"></div>
                                             <div class="desc">
                                                 <div class="price-box">
-                                                    <span class="label">Giá:</span>
+                                                    <span class="label" th:text="#{user.foods.price}">Giá:</span>
                                                     <span class="price" th:text="${#numbers.formatDecimal(foodSelection.food.price, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span>
                                                 </div>
                                                 <div class="action">
@@ -85,7 +85,7 @@
                         <div class="format-bg-bottom"></div>
                         </div>
                         <div class="d-flex justify-content-center pt-5 pb-2">
-                            <button type="submit" class="btn text-white" style="background-color: orangered" >Thanh toán</button>
+                            <button type="submit" class="btn text-white" style="background-color: orangered" th:text="#{user.foods.purchase}">Thanh toán</button>
                         </div>
                     </form>
                 </div>

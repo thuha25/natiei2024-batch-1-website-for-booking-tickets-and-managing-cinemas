@@ -46,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function loadShowtime(dateObj, cityId) {
         var movieId = parseInt($('#modalMovieId').val(), 10);
-        console.log($('#modalMovieId').val());
         $.ajax({
             type: 'GET',
             url: '/tickets/modal/showtime',

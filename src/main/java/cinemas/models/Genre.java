@@ -1,6 +1,8 @@
 package cinemas.models;
 
 import cinemas.models.common.CreationUpdationAuditableEntity;
+import cinemas.utils.DataTypeUtils;
+import cinemas.utils.LocaleUtils;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -43,5 +45,9 @@ public class Genre extends CreationUpdationAuditableEntity {
 
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
+    }
+
+    public String getName() {
+        return LocaleUtils.getTextWithLocale(nameVn, nameEn);
     }
 }

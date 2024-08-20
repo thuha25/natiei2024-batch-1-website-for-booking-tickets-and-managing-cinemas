@@ -8,4 +8,8 @@ public class DataTypeUtils {
             return null; // Or handle this case as needed
         }
     }
+
+    public static boolean isNullOrBlank(String str) {
+        return str == null || str.isBlank();
+    }
 }

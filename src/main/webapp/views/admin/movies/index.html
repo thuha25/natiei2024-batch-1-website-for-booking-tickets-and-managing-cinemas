@@ -91,9 +91,9 @@
                                         <tbody>
                                         <tr th:each="movie, iterStat : ${moviesPagination.getData()}"
                                             th:classappend="${iterStat.index % 2 == 0} ? 'even' : 'odd'" role="row">
-                                            <td class="sorting_1" th:text="${movie.titleVn}"></td>
-                                            <td>Hoạt hình</td>
-                                            <td>01/09/2024</td>
+                                            <td class="sorting_1" th:text="${movie.getTitle()}"></td>
+                                            <td><span th:text="${movie.getGenresName()}"></span></td>
+                                            <td th:text="${#temporals.format(movie.releaseDate, 'dd/MM/yyyy')}">01/09/2024</td>
                                             <td><img
                                                     th:src="${movie.photoUrl}"
                                                     height="150" alt="">
