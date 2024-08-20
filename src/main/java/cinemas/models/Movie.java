@@ -40,7 +40,7 @@ public class Movie extends SoftDeletableEntity {
     private Integer runningTime; // minutes
     private String trailer;
     @Column(name = "age_limit")
-    private Integer ageLimit = 0; // Example: '18' is for age >= 18
+    private Integer ageLimit; // Example: '18' is for age >= 18
     @Column(name = "photo_url")
     private String photoUrl;
     @Enumerated(EnumType.ORDINAL)

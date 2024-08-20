@@ -3,7 +3,9 @@ package cinemas.controllers;
 import cinemas.models.City;
 import cinemas.models.Screen;
 import cinemas.models.Showtime;
+import cinemas.models.Theater;
 import cinemas.services.CitiesService;
+import cinemas.services.ScreensService;
 import cinemas.services.ShowtimesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +31,10 @@ public class ShowtimesController {
         LocalDate startDate = LocalDate.now();
         List<City> cityList = cityService.getAllCity();
         List<Map<String, String>> formattedDates = showtimesService.generateFormattedDates(startDate, 20);
-        Map<Screen, List<Showtime>> groupedShowtimes = showtimesService.getGroupedShowtimes(movieId, 1, startDate);
+        Map<Theater, Map<Screen, List<Showtime>>> groupedShowtimesByTheater = showtimesService.getGroupedShowtimesByTheater(movieId, 1, startDate);
         model.addAttribute("dates", formattedDates);
         model.addAttribute("cities", cityList);
-        model.addAttribute("groupedShowtimes", groupedShowtimes);
+        model.addAttribute("groupedShowtimesByTheater", groupedShowtimesByTheater);
         return "components/dialog-ticket :: modal-content";
     }
 
@@ -43,8 +45,8 @@ public class ShowtimesController {
             @RequestParam("cityId") int cityId,
             Model model) {
         LocalDate selectedDate = LocalDate.parse(dateStr);
-        Map<Screen, List<Showtime>> groupedShowtimes = showtimesService.getGroupedShowtimes(movieId, cityId, selectedDate);
-        model.addAttribute("groupedShowtimes", groupedShowtimes);
+        Map<Theater, Map<Screen, List<Showtime>>> groupedShowtimesByTheater = showtimesService.getGroupedShowtimesByTheater(movieId, cityId, selectedDate);
+        model.addAttribute("groupedShowtimesByTheater", groupedShowtimesByTheater);
         return "components/dialog-ticket :: showtime-content";
     }
 }
