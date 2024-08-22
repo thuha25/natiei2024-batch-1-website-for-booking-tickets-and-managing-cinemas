@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MoviesService {
-    List<Movie> getAllMovies();
+    List<Movie> getAllNowShowingMovies();
     Movie save(Movie movie);
     Optional<Movie> findById(int id);
     List<Movie> getMoviesByStatus(MovieStatus movieStatus);

@@ -1,8 +1,10 @@
 package cinemas.dtos;
 
+import cinemas.enums.BookingStatusEnum;
 import cinemas.models.*;
 import cinemas.utils.BookingUtils;
 
+import java.time.ZonedDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,9 @@ public class BookingDto {
     private int point;
     private int totalFoodPrice;
     private int totalSeatPrice;
+    private BookingStatusEnum status;
+    private ZonedDateTime createdAt;
+    private BookingRefund bookingRefund;
 
     public BookingDto(Booking booking) {
         this.id = booking.getId();
@@ -29,8 +34,37 @@ public class BookingDto {
         this.bookingFoods = booking.getBookingFoods();
         this.amount = booking.getAmount();
         this.point = booking.getPointUsed();
+        this.status = booking.getStatus();
+        this.createdAt = booking.getCreatedAt();
+        if (booking.getStatus() == BookingStatusEnum.REFUNDED) {
+            this.bookingRefund = booking.getBookingRefund();
+        }
         calculateTotalFoodPrice();
         calculateTotalSeatPrice();
+    }
+
+    public BookingRefund getBookingRefund() {
+        return bookingRefund;
+    }
+
+    public void setBookingRefund(BookingRefund bookingRefund) {
+        this.bookingRefund = bookingRefund;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public BookingStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookingStatusEnum status) {
+        this.status = status;
     }
 
     public int getId() {
@@ -81,20 +115,31 @@ public class BookingDto {
         return bookingFoods;
     }
 
-    public void calculateTotalSeatPrice(){
-        for(ShowtimeSeat showtimeSeat : seats){
+    public void calculateTotalSeatPrice() {
+        for (ShowtimeSeat showtimeSeat : seats) {
             totalSeatPrice += BookingUtils.getSeatPrice(showtimeSeat.getSeat(), showtime);
         }
     }
-    public void calculateTotalFoodPrice(){
-        for(BookingFood bookingFood : bookingFoods){
+
+    public void calculateTotalFoodPrice() {
+        for (BookingFood bookingFood : bookingFoods) {
             totalFoodPrice += (bookingFood.getFoodCount() * bookingFood.getFoodPrice());
         }
     }
-    public int getDiscount(){
-        return point*1000;
+
+    public int getDiscount() {
+        return point * 1000;
     }
-    public int getFinalPrice(){
+
+    public int getFinalPrice() {
         return totalFoodPrice + totalSeatPrice - getDiscount();
+    }
+
+    public boolean isCancelable() {
+        /*
+         * Check if booking not printed
+         * And not within 60 minutes before showtime
+         * */
+        return status == BookingStatusEnum.PAID && showtime.getStartTime().minusMinutes(60).isAfter(ZonedDateTime.now());
     }
 }

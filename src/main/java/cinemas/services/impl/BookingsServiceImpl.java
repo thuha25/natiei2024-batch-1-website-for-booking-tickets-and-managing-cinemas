@@ -1,9 +1,8 @@
 package cinemas.services.impl;
 
-import cinemas.dtos.BookingDto;
-import cinemas.dtos.FoodSelectionFormDto;
-import cinemas.dtos.SeatSelectionFormDto;
+import cinemas.dtos.*;
 import cinemas.enums.BookingStatusEnum;
+import cinemas.enums.RoleEnum;
 import cinemas.exceptions.BookingNotFoundException;
 import cinemas.exceptions.UserNotFoundException;
 import cinemas.models.*;
@@ -12,8 +11,7 @@ import cinemas.repositories.ShowtimeSeatsRepository;
 import cinemas.repositories.ShowtimesRepository;
 import cinemas.repositories.UsersRepository;
 import cinemas.services.BookingsService;
-import javassist.NotFoundException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,15 +23,18 @@ public class BookingsServiceImpl implements BookingsService {
     private UsersRepository usersRepository;
     private ShowtimesRepository showtimesRepository;
     private ShowtimeSeatsRepository showtimeSeatsRepository;
+    private Logger logger = org.slf4j.LoggerFactory.getLogger(BookingsServiceImpl.class);
+
     public BookingsServiceImpl(BookingsRepository bookingsRepository,
                                UsersRepository usersRepository,
                                ShowtimesRepository showtimesRepository,
-                               ShowtimeSeatsRepository showtimeSeatsRepository){
+                               ShowtimeSeatsRepository showtimeSeatsRepository) {
         this.bookingsRepository = bookingsRepository;
         this.usersRepository = usersRepository;
         this.showtimesRepository = showtimesRepository;
         this.showtimeSeatsRepository = showtimeSeatsRepository;
     }
+
     @Override
     public Booking createBooking(SeatSelectionFormDto seatSelectionForm, FoodSelectionFormDto foodSelectionForm, Integer pointUsed, Integer userId, Integer showtimeId) throws UserNotFoundException {
         int amount = seatSelectionForm.getTotalPrice() + foodSelectionForm.getTotalPrice() - pointUsed * 1000;
@@ -41,8 +42,8 @@ public class BookingsServiceImpl implements BookingsService {
         booking.setAmount(amount);
         booking.setPointUsed(pointUsed);
         Set<BookingFood> bookingFoods = new HashSet<>();
-        for(var foodSelection : foodSelectionForm.getFoodSelections()){
-            if(foodSelection.getCount() == 0){
+        for (var foodSelection : foodSelectionForm.getFoodSelections()) {
+            if (foodSelection.getCount() == 0) {
                 continue;
             }
             var bookingFood = new BookingFood();
@@ -54,11 +55,11 @@ public class BookingsServiceImpl implements BookingsService {
             bookingFoods.add(bookingFood);
         }
         User user = usersRepository.findById(userId).orElse(null);
-        if(user == null){
+        if (user == null) {
             throw new UserNotFoundException();
         }
         Showtime showtime = showtimesRepository.findById(showtimeId).orElse(null);
-        if(pointUsed > user.getRewardPoints() || pointUsed < 0){
+        if (pointUsed > user.getRewardPoints() || pointUsed < 0) {
             throw new IllegalArgumentException("Point used not valid!");
         }
         user.setRewardPoints(user.getRewardPoints() - pointUsed);
@@ -68,35 +69,71 @@ public class BookingsServiceImpl implements BookingsService {
         booking.setShowtime(showtime);
         booking.setCustomerName(user.getFullName());
         Booking bookingSaved = bookingsRepository.save(booking);
-        for(var selectionSeat : seatSelectionForm.getSeatSelectionsDto()){
+        for (var selectionSeat : seatSelectionForm.getSeatSelectionsDto()) {
             showtimeSeatsRepository.updateShowtimeSeat(showtimeId, userId, selectionSeat.getSeat().getId(), bookingSaved.getId());
         }
         return bookingSaved;
     }
+
     @Override
     public void updateBookingOnPaymentSuccess(Integer bookingId) throws BookingNotFoundException {
         Booking booking = bookingsRepository.findById(bookingId).orElse(null);
-        if(booking==null){
+        if (booking == null) {
             throw new BookingNotFoundException();
         }
         booking.setStatus(BookingStatusEnum.PAID);
     }
+
     @Override
     public BookingDto getBookingDtoById(Integer bookingId, Integer userId) throws BookingNotFoundException {
-        Booking booking = bookingsRepository.findBookingByUser(bookingId, userId);
-        if(booking==null){
+        Booking booking = null;
+        try {
+            booking = bookingsRepository.findBookingByUser(userId, bookingId);
+        } catch (Throwable e) {
+            logger.error("Error when getting booking by user", e);
+        }
+        if (booking == null) {
             throw new BookingNotFoundException();
         }
         return new BookingDto(booking);
     }
+
     @Override
-    public List<BookingDto> getBookingsDto(int userId){
-        List<Booking> bookings = bookingsRepository.findBookingsByUser(userId);
+    public PaginationResult<BookingDto> getPagnitionValidBookingsDtoOfUser(int userId, int page, int size) {
+        Pageable pageable = new Pageable(page, size);
+        var validBookingStatus = new BookingStatusEnum[]{BookingStatusEnum.REFUNDED, BookingStatusEnum.PRINTED, BookingStatusEnum.PAID};
+        var bookings = bookingsRepository.findBookingsByUserAndStatusWithCreatedDesc(userId, validBookingStatus, pageable);
+        var totalElements = bookingsRepository.countBookingsByUserAndStatus(userId, validBookingStatus);
         List<BookingDto> bookingsDto = new ArrayList<>();
-        for(Booking booking : bookings){
+        for (Booking booking : bookings) {
             BookingDto bookingDto = new BookingDto(booking);
             bookingsDto.add(bookingDto);
         }
-        return bookingsDto;
+        return new PaginationResult<>(totalElements, size, bookingsDto);
+    }
+
+    @Override
+    public void createBookingCancel(Integer userId, Integer bookingId, String reason) throws BookingNotFoundException {
+        Booking booking = null;
+        try {
+            booking = bookingsRepository.findBookingByUser(userId, bookingId);
+        } catch (Throwable e) {
+            logger.error("Error when getting booking by user", e);
+        }
+        if (booking == null) {
+            throw new BookingNotFoundException();
+        }
+        booking.setStatus(BookingStatusEnum.REFUNDED);
+        var user = usersRepository.findById(userId).get();
+        if (user.getRole() == RoleEnum.CUSTOMER) {
+            user.setRewardPoints(user.getRewardPoints() + booking.getAmount() / 1000);
+        }
+        var bookingRefund = new BookingRefund();
+        bookingRefund.setBooking(booking);
+        bookingRefund.setRefundedReason(reason);
+        bookingRefund.setRefundedByUser(user);
+        booking.setBookingRefund(bookingRefund);
+
+        bookingsRepository.save(booking);
     }
 }

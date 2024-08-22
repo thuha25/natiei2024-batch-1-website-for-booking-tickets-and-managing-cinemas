@@ -30,12 +30,74 @@
         <div class="divider"></div>
         <p class="total-price"><span th:text="#{user.bookings.total-price}"> Tổng cộng </span>: <span th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'"></span></p>
     </div>
-
-    <div class="qr-code">
+    <!-- Refund Information -->
+    <div th:if="${booking.status == T(cinemas.enums.BookingStatusEnum).REFUNDED}" class="refund-info">
+        <div class="divider"></div>
+        <h6 th:text="#{user.bookings.refund-info}">Thông tin hoàn vé</h6>
+        <p><strong th:text="#{user.bookings.refunded-at}">Thời gian hoàn vé:</strong>
+            <span th:text="${#temporals.format(booking.bookingRefund.refundedAt, 'dd/MM/yyyy HH:mm')}">07/07/2024 10:00</span>
+        </p>
+        <p><strong th:text="#{user.bookings.refunded-reason}">Lý do hoàn:</strong> <span th:text="${booking.bookingRefund.refundedReason}"></span></p>
+        <p><strong th:text="#{user.bookings.refunded-by}">Người hoàn:</strong> <span th:text="${booking.bookingRefund.refundedByUser.fullName}"></span></p>
+    </div>
+    <div class="qr-code" th:if="${booking.status == T(cinemas.enums.BookingStatusEnum).PAID || booking.status == T(cinemas.enums.BookingStatusEnum).PRINTED} ">
         <img src="https://static.vecteezy.com/system/resources/previews/002/557/391/original/qr-code-for-scanning-free-vector.jpg" alt="QR Code">
     </div>
 
-    <p class="note" th:text="#{user.bookings.note}">Vui lòng đưa mã số này đến quầy vé CGV để nhận vé của bạn</p>
+    <p th:if="${booking.status == T(cinemas.enums.BookingStatusEnum).PAID}" class="note" th:text="#{user.bookings.note}">Vui lòng đưa mã số này đến quầy vé CGV để nhận vé của bạn</p>
+    <div class="d-flex justify-content-end" th:if="${booking.isCancelable()}">
+        <button class="btn btn-light" data-toggle="modal" data-target="#cancelTicketModal" th:text="#{user.bookings.cancel}">Hủy vé</button>
+    </div>
 </div>
+<div class="modal fade" id="cancelTicketModal" tabindex="-1" role="dialog" aria-labelledby="cancelTicketModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog d-flex justify-content-center align-items-center" style="min-height: calc(100% - 1rem);" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelTicketModalLabel" th:text="#{user.bookings.cancel-modal.title}">Ticket Cancellation Rules</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p th:text="#{user.bookings.cancel-modal.rules}">Cancellation Rules:</p>
+                <ul>
+                    <li th:text="#{user.bookings.cancel-modal.rule1}">Refund will be converted into reward points (1000 VND = 1 point).</li>
+                    <li th:text="#{user.bookings.cancel-modal.rule2}">No refund for printed tickets.</li>
+                    <li th:text="#{user.bookings.cancel-modal.rule3}">No refund within 60 minutes before showtime.</li>
+                </ul>
+                <p th:text="#{user.bookings.cancel-modal.readCarefully}">Please read the information carefully before confirming the cancellation.</p>
+                <form id="cancelTicketForm" th:action="@{/users/bookings/cancel}" method="POST" th:object="${bookingCancelFormDto}">
+                    <div class="form-group">
+                        <label for="reason" th:text="#{user.bookings.cancel-modal.reasonLabel}">Reason for Cancellation:</label>
+                        <textarea class="form-control" id="reason" name="reason" rows="3" th:placeholder="#{user.bookings.cancel-modal.reasonPlaceholder}" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="bookingId" th:value="${booking.id}">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{user.bookings.cancel-modal.cancel}">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmCancelButton" th:text="#{user.bookings.cancel-modal.confirm}">Confirm Cancellation</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const current_language_code = document.getElementById('current_language_code').textContent;
+    document.getElementById('confirmCancelButton').addEventListener('click', function() {
+      var reason = document.getElementById('reason').value.trim();
+      if (reason === '') {
+        if(current_language_code === 'vi'){
+          alert('Vui lòng nhập lý do hủy vé.');
+        } else {
+          alert('Please enter a reason for cancellation.');
+        }
+      } else {
+        document.getElementById('cancelTicketForm').submit();
+        $('#cancelTicketModal').modal('hide');
+      }
+    });
+</script>
 </body>
 </html>

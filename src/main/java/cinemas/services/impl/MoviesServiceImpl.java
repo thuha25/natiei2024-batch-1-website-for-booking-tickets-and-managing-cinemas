@@ -18,8 +18,8 @@ public class MoviesServiceImpl implements MoviesService {
     }
 
     @Override
-    public List<Movie> getAllMovies() {
-        return moviesRepository.findAll();
+    public List<Movie> getAllNowShowingMovies() {
+        return moviesRepository.getMoviesByStatus(MovieStatus.NOW_SHOWING);
     }
     @Override
     public Movie save(Movie movie) {

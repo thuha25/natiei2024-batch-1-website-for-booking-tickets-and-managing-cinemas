@@ -5,7 +5,7 @@ import java.util.List;
 public class PaginationResult<T> {
     private Integer totalElements;
     private Integer totalPages;
-    private final List<T> data;
+    private List<T> data;
 
     public PaginationResult(Integer totalElements, Integer size, List<T> data) {
         this.totalElements = totalElements;

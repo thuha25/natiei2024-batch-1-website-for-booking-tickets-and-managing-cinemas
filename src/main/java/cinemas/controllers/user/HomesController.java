@@ -26,7 +26,7 @@ public class HomesController {
     @GetMapping("/")
     public String home(Model model) {
         List<Banner> banners = bannersService.getAllBanners();
-        List<Movie> movies = moviesService.getAllMovies();
+        List<Movie> movies = moviesService.getAllNowShowingMovies();
         model.addAttribute("banners", banners);
         model.addAttribute("movies", movies);
         return "user/home-page";
