@@ -1,5 +1,6 @@
 package cinemas.repositories.impl;
 
+import cinemas.dtos.Pageable;
 import cinemas.enums.BookingStatusEnum;
 import cinemas.models.Booking;
 import cinemas.models.Screen;
@@ -12,6 +13,7 @@ import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository("bookingsRepository")
@@ -66,11 +68,66 @@ public class BookingsRepositoryImpl extends BaseRepositoryImpl<Booking, Integer>
         return (Booking) query.getSingleResult();
     }
     @Override
-    public List<Booking> findBookingsByUser(int userId){
-        String hql = "FROM Booking b WHERE b.customer.id = :userId";
-        List<Booking> bookings = entityManager.createQuery(hql, Booking.class)
-                .setParameter("userId", userId)
-                .getResultList();
-        return bookings;
+    public List<Booking> findBookingsByUserAndStatusWithCreatedDesc(int userId, BookingStatusEnum[] statusEnums, Pageable pageable) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> criteriaQuery = criteriaBuilder.createQuery(Booking.class);
+        Root<Booking> bookingRoot = criteriaQuery.from(Booking.class);
+
+        // Build the base query
+        CriteriaQuery<Booking> query = criteriaQuery.select(bookingRoot);
+
+        // Create predicates
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(criteriaBuilder.equal(bookingRoot.get("customer").get("id"), userId));
+
+        if (statusEnums != null && statusEnums.length > 0) {
+            CriteriaBuilder.In<BookingStatusEnum> statusPredicate = criteriaBuilder.in(bookingRoot.get("status"));
+            for (BookingStatusEnum statusEnum : statusEnums) {
+                statusPredicate.value(statusEnum);
+            }
+            predicates.add(statusPredicate);
+        }
+
+        // Add predicates to the query
+        query.where(predicates.toArray(new Predicate[0]));
+
+        // Order by creation date descending
+        query.orderBy(criteriaBuilder.desc(bookingRoot.get("createdAt")));
+
+        // Create TypedQuery and apply pagination
+        TypedQuery<Booking> typedQuery = entityManager.createQuery(query);
+        typedQuery.setFirstResult(pageable.getOffset());
+        typedQuery.setMaxResults(pageable.getSize());
+
+        // Execute the query and get results
+        return typedQuery.getResultList();
+    }
+
+    @Override
+    public Integer countBookingsByUserAndStatus(int userId, BookingStatusEnum[] statusEnums) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Booking> bookingRoot = criteriaQuery.from(Booking.class);
+
+        // Build the base query
+        CriteriaQuery<Long> query = criteriaQuery.select(criteriaBuilder.count(bookingRoot));
+
+        // Create predicates
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(criteriaBuilder.equal(bookingRoot.get("customer").get("id"), userId));
+
+        if (statusEnums != null && statusEnums.length > 0) {
+            CriteriaBuilder.In<BookingStatusEnum> statusPredicate = criteriaBuilder.in(bookingRoot.get("status"));
+            for (BookingStatusEnum statusEnum : statusEnums) {
+                statusPredicate.value(statusEnum);
+            }
+            predicates.add(statusPredicate);
+        }
+
+        // Add predicates to the query
+        query.where(predicates.toArray(new Predicate[0]));
+
+        // Create TypedQuery and execute the query
+        return entityManager.createQuery(query).getSingleResult().intValue();
     }
 }

@@ -2,6 +2,7 @@ package cinemas.models;
 
 import cinemas.converters.ZonedDateTimeConverter;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.ZonedDateTime;
 
@@ -9,14 +10,10 @@ import java.time.ZonedDateTime;
 @Table(name = "booking_refunds")
 public class BookingRefund {
     @Id
-    @Column(name = "booking_id")
-    private Integer id;
-
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "booking_id")
     private Booking booking;
-
+    @CreationTimestamp
     @Convert(converter = ZonedDateTimeConverter.class)
     @Column(name = "refunded_at")
     private ZonedDateTime refundedAt;
@@ -24,7 +21,7 @@ public class BookingRefund {
     private String refundedReason;
 
     @ManyToOne
-    @JoinColumn(name = "refunded_by", insertable = false, updatable = false)
+    @JoinColumn(name = "refunded_by")
     private User refundedByUser;
 
     // Getters and Setters

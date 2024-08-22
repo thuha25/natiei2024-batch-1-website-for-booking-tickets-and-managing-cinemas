@@ -1,5 +1,4 @@
 .card {
-    height: 350px;
     border: 2px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -27,4 +26,25 @@
 .btn-primary:hover {
     background-color: #f04e31;
     color:#fdfcf0;
+}
+.refund-info {
+    border: 1px solid #ddd; /* Light grey border */
+    padding: 15px; /* Add some padding around the content */
+    margin-top: 20px; /* Space above the refund info section */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+}
+
+.refund-info h6 {
+    font-size: 1.2rem; /* Larger font size for the section heading */
+    color: #333; /* Darker color for better readability */
+    margin-bottom: 10px; /* Space below the heading */
+}
+
+.refund-info p {
+    margin: 5px 0; /* Space between paragraphs */
+}
+
+.refund-info strong {
+    color: #555; /* Slightly darker color for labels */
 }

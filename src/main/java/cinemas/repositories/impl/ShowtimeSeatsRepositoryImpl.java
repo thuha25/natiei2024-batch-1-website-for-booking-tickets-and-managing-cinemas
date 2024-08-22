@@ -22,7 +22,7 @@ public class ShowtimeSeatsRepositoryImpl extends BaseRepositoryImpl<ShowtimeSeat
     @Override
     public void updateShowtimeSeat(int showtimeId, int userId, int seatId, int bookingId){
         String hql = "UPDATE ShowtimeSeat ss SET ss.booking.id = :bookingId " +
-                "WHERE ss.showtime.id = :showtimeId AND ss.seat.id = :seatId AND ss.user.id = :userId";
+                "WHERE ss.showtime.id = :showtimeId AND ss.seat.id = :seatId AND ss.user.id = :userId AND ss.booking.id IS NULL";
 
         entityManager.createQuery(hql)
                 .setParameter("bookingId", bookingId)

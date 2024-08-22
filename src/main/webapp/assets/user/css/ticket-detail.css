@@ -48,3 +48,22 @@
     border-top: 1px dashed #ccc;
     margin: 15px 0;
 }
+
+.modal-body ul {
+  padding-left: 1.5rem;
+}
+
+.modal-body ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.modal-body ul li:before {
+  content: "\2022";
+  color: #007bff; /* Customize bullet color */
+  font-size: 1.25rem; /* Customize bullet size */
+  display: inline-block;
+  width: 1.25rem;
+  margin-left: -1.5rem;
+  margin-right: 0.5rem;
+}

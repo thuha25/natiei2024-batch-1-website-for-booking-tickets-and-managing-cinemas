@@ -36,7 +36,20 @@ public class Booking extends CreationUpdationAuditableEntity {
     @Column(name = "point_used")
     private Integer pointUsed = 0;
 
+
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @PrimaryKeyJoinColumn
+    private BookingRefund bookingRefund;
+
     // Getters and Setters
+    public BookingRefund getBookingRefund() {
+        return bookingRefund;
+    }
+
+    public void setBookingRefund(BookingRefund bookingRefund) {
+        this.bookingRefund = bookingRefund;
+    }
+
     public Integer getId() {
         return id;
     }

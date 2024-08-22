@@ -1,6 +1,7 @@
 package cinemas.services.impl;
 
 import cinemas.dtos.ShowtimeSeatDto;
+import cinemas.enums.BookingStatusEnum;
 import cinemas.enums.SeatTypeEnum;
 import cinemas.models.*;
 import cinemas.repositories.SeatsRepository;
@@ -50,6 +51,9 @@ public class ShowtimeSeatsServiceImpl implements ShowtimeSeatsService {
             seatGrid[row][col] = showtimeSeatDto;
         }
         for (ShowtimeSeat showtimeSeat : showtime.getShowtimeSeats()){
+            if (showtimeSeat.getBooking() != null && showtimeSeat.getBooking().getStatus() == BookingStatusEnum.REFUNDED){
+                continue;
+            }
             Seat seat = showtimeSeat.getSeat();
             int row = seat.getVerticalIndex();
             int col = seat.getHorizontalIndex();

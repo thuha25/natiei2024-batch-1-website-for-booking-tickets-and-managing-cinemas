@@ -7,13 +7,14 @@
     <h4 th:text="#{user.bookings.history}"> LỊCH SỬ </h4>
 </div>
 <form>
-    <th:block th:each="booking : ${bookings}">
-        <div class="card">
+    <p th:if="${bookingsPagination.totalElements == 0}" th:text="#{user.bookings.no-bookings}">Chưa có thông tin đặt vé</p>
+    <th:block th:each="booking : ${bookingsPagination.data}">
+        <div class="card m-2 p-2">
             <div class="row g-0">
                 <div class="col-md-2">
                     <img th:src="${booking.movie.photoUrl}" class="img-fluid rounded-start" alt="Kẻ Trộm Mặt Trăng 4">
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-7">
                     <div class="card-body">
                         <h5 class="card-title"><span th:text="#{user.bookings.id}">Mã Đặt Vé</span>: <span th:text="${booking.id}">813860624</span></h5>
                         <p class="card-text"><strong th:text="${booking.movie.getTitle()}">Kẻ Trộm Mặt Trăng 4</strong></p>
@@ -21,12 +22,53 @@
                             <br><span th:text="#{user.bookings.showtime}">Suất chiếu</span>: <span th:text="${booking.showtime.startTime.toLocalTime()}"></span>
                             <br><span th:text="#{user.bookings.theater}">Rạp chiếu</span>: <span th:text="${booking.theater.name}">CGV Vincom Da Nang, Cinema 3</span></p>
                         <p class="card-text"><span th:text="#{user.bookings.total-price}">Tổng tiền</span>&nbsp;<strong th:text="${#numbers.formatDecimal(booking.getFinalPrice(), 0, 'POINT', 0, 'COMMA')} + ' ₫'">338,090.00 đ</strong></p>
+                        <!-- Display the createdAt information with formatting -->
+                        <p class="card-text">
+                            <span th:text="#{user.bookings.created-at}">Đặt vé lúc</span>:
+                            <span th:text="${#temporals.format(booking.createdAt, 'dd/MM/yyyy HH:mm')}">07/07/2024 10:00</span>
+                        </p>
                         <a th:href="@{/users/bookings/{id}(id=${booking.id})}" class="btn btn-primary" th:text="#{user.bookings.view-details}">Xem</a>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex flex-column align-items-end justify-content-start">
+                    <div>
+                        <span th:if="${booking.status == T(cinemas.enums.BookingStatusEnum).REFUNDED}"
+                              class="badge bg-secondary" style="font-size: 1.5rem; text-wrap: pretty;" th:text="#{user.bookings.refunded}">Đã hủy</span>
+                        <span th:if="${booking.status == T(cinemas.enums.BookingStatusEnum).PAID}"
+                              class="badge bg-success" style="font-size: 1.5rem; text-wrap: pretty;" th:text="#{user.bookings.paid}">Đã thanh toán</span>
+                        <span th:if="${booking.status == T(cinemas.enums.BookingStatusEnum).PRINTED}"
+                              class="badge bg-warning" style="font-size: 1.5rem; text-wrap: pretty;" th:text="#{user.bookings.printed}">Đã in vé</span>
                     </div>
                 </div>
             </div>
         </div>
     </th:block>
+    <!-- Pagination Controls -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="paginate_button page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                <a th:if="${currentPage > 1}" th:href="@{/users/bookings(page=${currentPage - 1})}" class="page-link">Previous</a>
+                <span th:unless="${currentPage > 1}" class="page-link">Previous</span>
+            </li>
+
+            <!-- Page Number Buttons -->
+            <li th:if="${bookingsPagination.totalPages > 0}"
+                th:each="i : ${#numbers.sequence(1, bookingsPagination.totalPages)}"
+                class="paginate_button page-item"
+                th:classappend="${i == currentPage} ? 'active' : ''">
+                <a th:href="@{/users/bookings(page=${i})}"
+                   tabindex="0"
+                   class="page-link"
+                   th:text="${i}"></a>
+            </li>
+
+            <!-- Next Button -->
+            <li class="paginate_button page-item" th:classappend="${currentPage >= bookingsPagination.getTotalPages()} ? 'disabled' : ''">
+                <a th:if="${currentPage < bookingsPagination.getTotalPages()}" th:href="@{/users/bookings(page=${currentPage + 1})}" class="page-link">Next</a>
+                <span th:unless="${currentPage < bookingsPagination.getTotalPages()}" class="page-link">Next</span>
+            </li>
+        </ul>
+    </nav>
 </form>
 </body>
 </html>
