@@ -136,4 +136,13 @@ public class BookingsServiceImpl implements BookingsService {
 
         bookingsRepository.save(booking);
     }
+
+    @Override
+    public PaginationResult<Booking> getPaginationBookingsByIdOrCustomerName(String keyword, int page, int size) {
+        var pageable = new Pageable(page, size);
+        var bookings = bookingsRepository.getBookingsByIdOrCustomerNameWithCreatedDesc(keyword, pageable);
+        var totalElements = bookingsRepository.countBookingsByIdOrCustomerName(keyword);
+        return new PaginationResult<>(totalElements, size, bookings);
+    }
+
 }

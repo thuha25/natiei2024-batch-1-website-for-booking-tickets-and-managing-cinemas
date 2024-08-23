@@ -130,4 +130,34 @@ public class BookingsRepositoryImpl extends BaseRepositoryImpl<Booking, Integer>
         // Create TypedQuery and execute the query
         return entityManager.createQuery(query).getSingleResult().intValue();
     }
+
+    public List<Booking> getBookingsByIdOrCustomerNameWithCreatedDesc(String keyword, Pageable pageable) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> cq = cb.createQuery(Booking.class);
+        Root<Booking> booking = cq.from(Booking.class);
+
+        Predicate idPredicate = cb.like(cb.toString(booking.get("id")), "%" + keyword + "%");
+        Predicate namePredicate = cb.like(booking.get("customerName"), "%" + keyword + "%");
+        cq.where(cb.or(idPredicate, namePredicate));
+        cq.orderBy(cb.desc(booking.get("createdAt")));
+
+        TypedQuery<Booking> query = entityManager.createQuery(cq);
+        query.setFirstResult(pageable.getOffset());
+        query.setMaxResults(pageable.getSize());
+
+        return query.getResultList();
+    }
+
+    @Override
+    public Integer countBookingsByIdOrCustomerName(String keyword) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Booking> booking = cq.from(Booking.class);
+
+        Predicate idPredicate = cb.like(cb.toString(booking.get("id")), "%" + keyword + "%");
+        Predicate namePredicate = cb.like(booking.get("customerName"), "%" + keyword + "%");
+        cq.select(cb.count(booking)).where(cb.or(idPredicate, namePredicate));
+        TypedQuery<Long> query = entityManager.createQuery(cq);
+        return Math.toIntExact(query.getSingleResult());
+    }
 }
