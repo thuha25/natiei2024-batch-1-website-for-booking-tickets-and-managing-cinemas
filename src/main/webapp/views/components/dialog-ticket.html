@@ -33,18 +33,25 @@
             </li>
           </ul>
           <ul class="select-showtime showtime-current" th:fragment="showtime-content">
-            <li th:each="entry : ${groupedShowtimes}">
+            <li th:each="theaterEntry : ${groupedShowtimesByTheater}">
+              <!-- Theater Level -->
               <div class="site-cgv">
-                <h3 th:text="${entry.key.theater.name}">Tên rạp chiếu</h3>
+                <h3 th:text="${theaterEntry.key.name}">Tên rạp chiếu</h3>
               </div>
-              <div class="cinema">
-                <h4 th:text="${entry.key.name}">Tên màn hình</h4>
-              </div>
-              <ul class="showtime">
-                <li class="item" th:each="timeSlot : ${entry.value}">
-                  <a th:href="@{/ticket-bookings/showtimes/{id}(id=${timeSlot.id})}">
-                    <span th:text="${timeSlot.startTime.toLocalTime()}">19:30</span>
-                  </a>
+              <ul class="screens">
+                <li th:each="screenEntry : ${theaterEntry.value}">
+                  <!-- Screen Level -->
+                  <div class="cinema">
+                    <h4 th:text="${screenEntry.key.name}">Tên màn hình</h4>
+                  </div>
+                  <ul class="showtime">
+                    <li class="item" th:each="timeSlot : ${screenEntry.value}">
+                      <!-- Showtime Level -->
+                      <a th:href="@{/ticket-bookings/showtimes/{id}(id=${timeSlot.id})}">
+                        <span th:text="${timeSlot.startTime.toLocalTime()}">19:30</span>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </li>

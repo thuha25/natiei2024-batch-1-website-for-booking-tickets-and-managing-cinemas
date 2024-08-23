@@ -38,7 +38,7 @@ public class CitiesServiceImpl implements CitiesService {
         var theaters = city.get().getTheaters();
         List<TheaterDto> theaterDtos = new ArrayList<>();
         theaters.forEach(theater ->
-                theaterDtos.add(new TheaterDto(theater.getId(), theater.getName()))
+                theaterDtos.add(new TheaterDto(theater.getId(), theater.getName(), theater.getLocation()))
         );
         return new CityDto(city.get().getId(), city.get().getName(), theaterDtos);
     }

@@ -14,11 +14,81 @@
             color: #333;
         }
     </style>
+    <link rel="stylesheet" th:href="@{/assets/user/css/showTheater.css}">
     <script th:src="@{/assets/user/js/showTheater.js}"></script>
 </head>
 <body>
 <section layout:fragment="body">
-    <div th:insert="~{components/cities}"></div>
+    <div class="cinema-container">
+        <div class="header">
+            <h1>CGV CINEMAS</h1>
+        </div>
+        <div class="locations">
+            <ul>
+                <li th:each="city : ${cities}"
+                    th:text="${city.name}"
+                    th:data-city-id="${city.id}"
+                    ></li>
+            </ul>
+        </div>
+        <div id="info" class="info"></div>
+    </div>
+    <div class="showtime-movie-detail" th:fragment="showtime-detail" >
+        <div id="location-threater" th:if="${theater != null}">
+            <iframe
+                    id="map-frame"
+                    width="1000"
+                    height="450"
+                    frameborder="0" style="border:0"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    th:src="${theater.location}"
+                    allowfullscreen>
+            </iframe>
+        </div>
+        <div id="showtime-detail" th:if="${formattedDates!=null}">
+            <div class="list-date-showtime">
+                <button id="prev" class="nav-button"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="date-wrapper">
+                    <ul class="dates">
+                        <li class="date" th:attr="data-theater-id=${theater.id}" th:each="formattedDate,iterStat : ${formattedDates}" th:classappend="${iterStat.index == 0} ? 'selected' : ''">
+                            <div class="mouth">
+                                <span th:text="${formattedDate.month}">08</span>
+                                <em th:text="${formattedDate.dayOfWeek}">Mon</em>
+                            </div>
+                            <div class="day">
+                                <strong th:text="${formattedDate.day}">19</strong>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <button id="next" class="nav-button"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="movie-list" th:fragment="theater-detail-showtime">
+                <div th:each="entry : ${groupedShowtimes}">
+                    <div class="movie-item">
+                        <h2 class="movie-title" th:text="${entry.key.getTitle()}">QUÁI VẬT KHÔNG GIAN</h2>
+                        <div class="movie-content">
+                            <img th:src="${entry.key.photoUrl}" alt="Movie Poster" class="movie-poster">
+                            <div class="movie-info">
+                                <div th:each="screenEntry : ${entry.value}">
+                                    <div class="screening">
+                                        <h3 th:text="${screenEntry.key.name}">Rạp 4DX</h3>
+                                        <div class="showtimes">
+                                            <a th:each="showtime : ${screenEntry.value}"
+                                               th:href="@{/ticket-bookings/showtimes/{id}(id=${showtime.id})}">
+                                                <span th:text="${showtime.time}">12:00 PM</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 </body>
 </html>

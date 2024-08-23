@@ -32,7 +32,7 @@ public class BookingsController {
     @GetMapping("{id}")
     public String show(@PathVariable("id") Integer bookingId, Model model, HttpSession session) throws BookingNotFoundException {
         User user = (User) session.getAttribute("user");
-        BookingDto bookingDto = bookingsService.getBookingDtoById(bookingId, user.getId());
+        BookingDto bookingDto = bookingsService.getBookingDtoById(bookingId,user.getId());
         model.addAttribute("booking", bookingDto);
         model.addAttribute("section", "booking-detail");
         model.addAttribute("bookingCancelFormDto", new BookingCancelFormDto());

@@ -3,13 +3,14 @@ package cinemas.dtos;
 public class TheaterDto {
     private Integer id;
     private String name;
-
+    private String location;
     public TheaterDto() {
     }
 
-    public TheaterDto(Integer id, String name) {
+    public TheaterDto(Integer id, String name, String location) {
         this.id = id;
         this.name = name;
+        this.location = location;
     }
 
     public Integer getId() {
@@ -19,4 +20,5 @@ public class TheaterDto {
     public String getName() {
         return name;
     }
+    public String getLocation(){return location;}
 }
