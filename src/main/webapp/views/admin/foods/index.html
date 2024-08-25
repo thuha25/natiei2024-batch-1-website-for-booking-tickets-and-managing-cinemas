@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.w3.org/1999/xhtml"
+        layout:decorate="~{layouts/admin/layout}"
+        lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>FOODS</title>
+    <link rel="stylesheet" th:href="@{/assets/admin/css/movie.css}"/>
+</head>
+<body>
+<form layout:fragment="body">
+    <div class="wrapper mt-3">
+        <div class="container-fluid">
+            <h1 class="h3 mb-2 text-gray-800">Thức ăn nhanh
+                <a href="" class="btn btn-success btn-circle">+</a>
+            </h1>
+            <div class="filter-container">
+                <div class="search-bar">
+                    <div class="d-flex">
+                        <input class="form-control me-2" type="search" name="keyword" placeholder="Tìm theo tiêu đề ..."
+                               aria-label="Search" style="width: 500px" th:value="${keyword}">
+                        <button class="btn btn-success" type="submit" style=" margin-left: -48px;"><i
+                                class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 mb-2">
+                                    <div class="dataTables_length" id="dataTable_length">
+                                        <label>
+                                            Xem
+                                            <select name="size" aria-controls="dataTable"
+                                                    class="custom-select custom-select-sm form-control form-control-sm">
+                                                <option th:value="10" th:text="'10'" th:selected="${size == 10}">10
+                                                </option>
+                                                <option th:value="25" th:text="'25'" th:selected="${size == 25}">25
+                                                </option>
+                                                <option th:value="50" th:text="'50'" th:selected="${size == 50}">50
+                                                </option>
+                                                <option th:value="100" th:text="'100'" th:selected="${size == 100}">
+                                                    100
+                                                </option>
+                                            </select>
+                                            hàng
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered dataTable" id="dataTable" width="100%"
+                                           cellspacing="0" role="grid" aria-describedby="dataTable_info"
+                                           style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-sort="ascending"
+                                                aria-label="Tên : activate to sort column descending"
+                                                style="width: 111.333px;">Tên
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Giá thành: activate to sort column ascending"
+                                                style="width: 104.333px;">Giá thành
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1"
+                                                aria-label="Mô tả: activate to sort column ascending"
+                                                style="width: 192.333px;">Mô tả
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label="Ảnh minh họa: activate to sort column ascending"
+                                                style="width: 82.3333px;">Ảnh minh họa
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                                colspan="1" aria-label=": activate to sort column ascending"
+                                                style="width: 76px;"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="food, iterStat : ${foodsPagination.getData()}"
+                                            th:classappend="${iterStat.index % 2 == 0} ? 'even' : 'odd'" role="row">
+                                            <td class="sorting_1" th:text="${food.getName()}"></td>
+                                            <td th:text="${food.getPrice() + ' VND'}"></td>
+                                            <td th:text="${food.getDescription()}"></td>
+                                            <td><img
+                                                    th:src="${food.getPhotoUrl()}"
+                                                    height="150" alt="">
+                                            </td>
+                                            <td>
+                                                <a href=""
+                                                   class="btn btn-success btn-circle btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <button onclick="" class="btn btn-danger btn-circle btn-sm">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <p th:if="${foodsPagination.totalElements == 0}">Không tìm thấy thực phẩm</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Pagination Controls -->
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                        <ul class="pagination">
+                                            <!-- Previous Button -->
+                                            <li class="paginate_button page-item previous" th:classappend="${currentPage == 1} ? 'disabled' : ''" id="dataTable_previous">
+                                                <a th:if="${currentPage > 1}" th:href="@{/admin/foods(keyword=${keyword}, page=${currentPage - 1}, size=${size})}" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                                                <span th:unless="${currentPage > 1}" class="page-link">Previous</span>
+                                            </li>
+
+                                            <!-- Page Number Buttons -->
+                                            <li th:if="${foodsPagination.totalPages > 0}"
+                                                th:each="i : ${#numbers.sequence(1, foodsPagination.totalPages)}"
+                                                class="paginate_button page-item"
+                                                th:classappend="${i == currentPage} ? 'active' : ''">
+                                                <a th:href="@{/admin/foods(keyword=${keyword}, page=${i}, size=${size})}"
+                                                   aria-controls="dataTable"
+                                                   data-dt-idx="${i}"
+                                                   tabindex="0"
+                                                   class="page-link"
+                                                   th:text="${i}"></a>
+                                            </li>
+
+                                            <!-- Next Button -->
+                                            <li class="paginate_button page-item next" th:classappend="${currentPage >= foodsPagination.getTotalPages()} ? 'disabled' : ''" id="dataTable_next">
+                                                <a th:if="${currentPage < foodsPagination.getTotalPages()}" th:href="@{/admin/foods(keyword=${keyword}, page=${currentPage + 1}, size=${size})}" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">Next</a>
+                                                <span th:unless="${currentPage < foodsPagination.getTotalPages()}" class="page-link">Next</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
