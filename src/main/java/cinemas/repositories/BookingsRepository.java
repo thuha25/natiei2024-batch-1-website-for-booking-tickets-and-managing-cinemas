@@ -13,4 +13,6 @@ public interface BookingsRepository extends BaseRepository<Booking, Integer> {
     Booking findBookingByUser(int userId, int bookingId);
     List<Booking> findBookingsByUserAndStatusWithCreatedDesc(int userId, BookingStatusEnum[] statusEnums, Pageable pageable);
     Integer countBookingsByUserAndStatus(int userId, BookingStatusEnum[] statusEnums);
+    List<Booking> getBookingsByIdOrCustomerNameWithCreatedDesc(String keyword, Pageable pageable);
+    Integer countBookingsByIdOrCustomerName(String keyword);
 }

@@ -16,4 +16,5 @@ public interface BookingsService {
     BookingDto getBookingDtoById(Integer bookingId, Integer userId) throws BookingNotFoundException;
     PaginationResult<BookingDto> getPagnitionValidBookingsDtoOfUser(int userId, int page, int size);
     void createBookingCancel(Integer userId, Integer bookingId, String reason) throws BookingNotFoundException;
+    PaginationResult<Booking> getPaginationBookingsByIdOrCustomerName(String keyword, int page, int size);
 }
