@@ -89,4 +89,14 @@ public class ShowtimesServiceImpl implements ShowtimesService {
                         Collectors.groupingBy(ShowtimeByTheaterDto::getScreen)
                 ));
     }
+
+    @Override
+    public List<Showtime> getShowtimeByTheaterAndDate(int theaterId, LocalDate date) {
+        return showtimesRepository.getShowtimeByTheaterAndDate(theaterId, date);
+    }
+
+    @Override
+    public List<Showtime> getShowtimeByTheaterAndDateWithStartTimeAsc(int theaterId, LocalDate date) {
+        return showtimesRepository.getShowtimeByTheaterAndDateWithStartTimeAsc(theaterId, date);
+    }
 }

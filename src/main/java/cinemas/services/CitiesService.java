@@ -1,8 +1,10 @@
 package cinemas.services;
 
 import cinemas.dtos.CityDto;
+import cinemas.dtos.TheaterDto;
 import cinemas.models.City;
 import java.util.List;
+import java.util.Map;
 
 public interface CitiesService {
     List<CityDto> getAllCityDtos();
