@@ -17,5 +17,7 @@ public interface ShowtimesService {
     Map<Theater, Map<Screen, List<Showtime>>> getGroupedShowtimesByTheater(int movieId, int cityId, LocalDate startDate);
     Showtime findById(int showtimeId);
     List<ShowtimeByTheaterDto> getShowtimeByTheater(int theaterId, LocalDate date);
+    List<Showtime> getShowtimeByTheaterAndDate(int theaterId, LocalDate date);
+    List<Showtime> getShowtimeByTheaterAndDateWithStartTimeAsc(int theaterId, LocalDate date);
     Map<Movie, Map<Screen, List<ShowtimeByTheaterDto>>> groupByMovieAndScreen(List<ShowtimeByTheaterDto> showtimeDtos);
 }

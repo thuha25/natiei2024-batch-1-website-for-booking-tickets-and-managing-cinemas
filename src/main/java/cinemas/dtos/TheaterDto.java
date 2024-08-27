@@ -13,6 +13,11 @@ public class TheaterDto {
         this.location = location;
     }
 
+    public TheaterDto(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

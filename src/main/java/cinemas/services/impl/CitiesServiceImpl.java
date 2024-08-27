@@ -3,15 +3,23 @@ package cinemas.services.impl;
 import cinemas.dtos.CityDto;
 import cinemas.dtos.TheaterDto;
 import cinemas.models.City;
+import cinemas.models.Theater;
 import cinemas.repositories.CitiesRepository;
+import cinemas.repositories.TheatersRepository;
 import cinemas.services.CitiesService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CitiesServiceImpl implements CitiesService {
+
     private CitiesRepository citiesRepository;
-    public CitiesServiceImpl(CitiesRepository citiesRepository) {
+    private TheatersRepository theatersRepository;
+
+    public CitiesServiceImpl(CitiesRepository citiesRepository, TheatersRepository theatersRepository) {
         this.citiesRepository = citiesRepository;
+        this.theatersRepository = theatersRepository;
     }
 
     @Override
@@ -46,5 +54,4 @@ public class CitiesServiceImpl implements CitiesService {
     public List<City> getAllCity() {
         return citiesRepository.findAll();
     }
-
 }

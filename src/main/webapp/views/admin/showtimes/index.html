@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/admin/layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Showtime by Theater</title>
+    <link rel="stylesheet" th:href="@{/assets/admin/css/showtime.css}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<section layout:fragment="body">
+    <div class="container-fluid mt-4">
+        <h1 class="h3 mb-2 text-gray-800">Xem Suất Chiếu Theo Rạp</h1>
+        <form action="/admin/showtimes" method="get">
+            <div class="row">
+                <div class="d-flex justify-content-between">
+                    <div class="form-group col-md-6">
+                        <label for="province">Tỉnh/Thành:</label>
+                        <select class="form-control" id="province" name="province" required>
+                            <option value="">Chọn Tỉnh/Thành</option>
+                            <option th:each="city : ${cities}"
+                                    th:value="${city.id}"
+                                    th:text="${city.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="theater">Rạp:</label>
+                        <select class="form-control" id="theater" name="theater" required>
+                            <option value="">Chọn Rạp</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="d-flex justify-content-between">
+                    <div class="form-group col-md-6">
+                        <label for="date">Chọn Ngày:</label>
+                        <input type="date" class="form-control" id="date" name="date" required th:value="${selectedDate}" lang="vi-VN">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2" style="padding-left: 5px;">
+                <button type="submit" class="btn btn-primary mt-3 mt-md-0">Xem</button>
+            </div>
+        </form>
+
+        <div class="mt-4">
+            <div>
+                <span class="badge bg-primary mr-2" th:text="${province}" style="font-size:20px;"></span>
+                <span class="badge bg-primary mr-2 " th:text="${theater}" style="font-size:20px;"></span>
+                <span class="badge bg-primary" th:text="${selectedDate}" style="font-size:20px;"></span>
+            </div>
+            <h2 class="h4">Danh Sách Suất Chiếu</h2>
+            <div th:if="${showtimes == null || showtimes.isEmpty()}">
+                <p>Không có suất chiếu nào cho rạp và ngày đã chọn.</p>
+            </div>
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Suất Chiếu</th>
+                        <th>Phim</th>
+                        <th>Giờ Bắt Đầu</th>
+                        <th>Phòng Chiếu</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="showtime : ${showtimes}">
+                        <td th:text="${showtime.id}"></td>
+                        <td th:text="${showtime.movie.getTitle()}"></td>
+                        <td th:text="${#temporals.format(showtime.startTime, 'HH:mm')}"></td>
+                        <td th:text="${showtime.screen.name}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <script th:src="@{/assets/admin/js/showtimes/index.js}"></script>
+</section>
+</body>
+</html>
