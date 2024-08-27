@@ -11,5 +11,4 @@ public interface CitiesService {
     City getCityById(int id);
     CityDto getCityDtoWithTheatersById(int id);
     List<City> getAllCity();
-    Map<Integer, List<TheaterDto>> getTheatersByCity();
 }

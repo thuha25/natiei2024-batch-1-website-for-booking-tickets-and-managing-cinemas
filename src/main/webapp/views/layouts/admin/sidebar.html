@@ -5,315 +5,203 @@
         lang="en"
 >
 <body>
-  <div id="sidebar-container" class="sidebar-collapsed">
+<div id="sidebar-container" class="sidebar-collapsed">
     <div class="logo">
-      <div class="text-white text-center text-nowrap overflow-hidden py-3">
-        <div id="sidebar-logo-text-admin" class="h4" style="transition: ease 0.3s">
-          CGV
+        <div class="text-white text-center text-nowrap overflow-hidden py-3">
+            <div id="sidebar-logo-text-admin" class="h4" style="transition: ease 0.3s">
+                CGV
+            </div>
+            <div
+                    id="sidebar-logo-text-admin"
+                    class="d-none h4"
+                    style="transition: ease 0.3s"
+            >
+                <i class="fas fa-smile mr-3"></i>CGV Admin
+            </div>
         </div>
-        <div
-          id="sidebar-logo-text-admin"
-          class="d-none h4"
-          style="transition: ease 0.3s"
-        >
-          <i class="fas fa-smile mr-3"></i>CGV Admin
-        </div>
-      </div>
     </div>
     <ul class="list-group">
-      <button id="sidebar-toggle" class="btn btn-outline-success">
-        <i id="sidebar-toggle-arrow" class="fas fa-angle-double-right"></i>
-      </button>
-      <a href="#" th:href="@{/admin}"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
+        <button id="sidebar-toggle" class="btn btn-outline-success">
+            <i id="sidebar-toggle-arrow" class="fas fa-angle-double-right"></i>
+        </button>
+        <a href="#" th:href="@{/admin}"
+           aria-expanded="false"
+           class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-          <span class="fa fa-dashboard fa-fw mr-3"></span>
-          <span class="menu-collapsed">Dashboard</span>
-        </div>
-      </a>
-      <a href="#" th:href="@{/admin/movies}"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
-        >
-          <span class="fa fa-film fa-fw mr-3"></span>
-          <span class="menu-collapsed">Phim</span>
-        </div>
-      </a>
-      <!-- Submenu content -->
-      <div id="submenu2" class="collapse sidebar-submenu">
-        <a
-          href="#"
-          class="list-group-item list-group-item-action bg-dark text-white"
-        >
-          <span class="menu-collapsed">a</span>
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="fa fa-dashboard fa-fw mr-3"></span>
+                <span class="menu-collapsed">Dashboard</span>
+            </div>
         </a>
-        <a
-          href="#"
-          class="list-group-item list-group-item-action bg-dark text-white"
+        <a href="#" th:href="@{/admin/movies}"
+           aria-expanded="false"
+           class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-          <span class="menu-collapsed">b</span>
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="fa fa-film fa-fw mr-3"></span>
+                <span class="menu-collapsed">Phim</span>
+            </div>
         </a>
-      </div>
-      <a
-        href=""
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
+        <a href="#" th:href="@{/admin/screens}"
+           aria-expanded="false"
+           class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-          <span class="fas fa-theater-masks fa-fw mr-3"></span>
-          <span class="menu-collapsed text-nowrap overflow-hidden"
-            >Theater</span
-          >
-          <span class="submenu-icon ml-auto"></span>
-        </div>
-      </a>
-      <a href="#" th:href="@{/admin/screens}"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
-        >
-          <span class="fas fa-video fa-fw mr-3"></span>
-          <span class="menu-collapsed text-nowrap overflow-hidden">
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="fas fa-video fa-fw mr-3"></span>
+                <span class="menu-collapsed text-nowrap overflow-hidden">
             Phòng chiếu
           </span>
-      </div>
-    </a>
-    <a
-            href=""
-            data-toggle="collapse"
-            aria-expanded="false"
-            class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-    >
-      <div
-              id="sidbar-menu-row"
-              class="d-flex w-100 justify-content-center align-items-center"
-      >
-        <span class="fa fa-calendar-check fa-fw mr-3"></span>
-        <span class="menu-collapsed text-nowrap overflow-hidden"
-        >Suất chiếu</span
+            </div>
+        </a>
+        <a href="#" th:href="@{/admin/foods}"
+           aria-expanded="false"
+           class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-      </div>
-    </a>
-    <a href="#" th:href="@{/admin/foods}"
-       aria-expanded="false"
-       class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-    >
-      <div
-              id="sidbar-menu-row"
-              class="d-flex w-100 justify-content-center align-items-center"
-      >
-        <span class="fas fas fa-utensils fa-fw mr-3"></span>
-        <span class="menu-collapsed text-nowrap overflow-hidden"
-        >Thức ăn nhanh</span
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="fas fas fa-utensils fa-fw mr-3"></span>
+                <span class="menu-collapsed text-nowrap overflow-hidden"
+                >Thức ăn nhanh</span
+                >
+            </div>
+        </a>
+        <a href="#" th:href="@{/admin/showtimes}"
+           aria-expanded="false"
+           class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-      </div>
-    </a>
-    <a
-            href=""
-            data-toggle="collapse"
-            aria-expanded="false"
-            class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-    >
-      <div
-              id="sidbar-menu-row"
-              class="d-flex w-100 justify-content-center align-items-center"
-      >
-        <span class="fa fa-users fa-fw mr-3"></span>
-        <span class="menu-collapsed text-nowrap overflow-hidden"
-        >Quản lí tài khoản</span
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="fa fa-calendar-check fa-fw mr-3"></span>
+                <span class="menu-collapsed text-nowrap overflow-hidden"
+                >Suất chiếu</span
+                >
+            </div>
+        </a>
+        <a href="#" th:href="@{/admin/tickets}"
+           aria-expanded="false"
+           class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-      </div>
-    </a>
-    <a
-            href=""
-            data-toggle="collapse"
-            aria-expanded="false"
-            class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-    >
-      <div
-              id="sidbar-menu-row"
-              class="d-flex w-100 justify-content-center align-items-center"
-      >
-        <span class="fas fa-ticket-alt fa-fw mr-3"></span>
-        <span class="menu-collapsed">Quản lí vé</span>
-      </div>
-    </a>
-    <a
-            href=""
-            data-toggle="collapse"
-            aria-expanded="false"
-            class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-    >
-      <div
-              id="sidbar-menu-row"
-              class="d-flex w-100 justify-content-center align-items-center"
-      >
-        <span class="icon fas fa-images fa-fw mr-3"></span>
-        <span class="menu-collapsed text-nowrap overflow-hidden">Quản lí banner</span>
-      </div>
-    </a>
-    <!--            <a href="" data-toggle="collapse" aria-expanded="false"-->
-    <!--               class="bg-dark list-group-item list-group-item-action flex-column align-items-start">-->
-    <!--                <div class="d-flex w-100 justify-content-start align-items-center">-->
-    <!--                </div>-->
-    <!--            </a>-->
-    <a
-            href=""
-            data-toggle="collapse"
-            aria-expanded="false"
-            class="bg-dark list-group-item list-group-item-action flex-column align-items-start flex-grow-1"
-    >
-      <div
-              id="sidbar-menu-row"
-              class="d-flex w-100 justify-content-center align-items-center"
-      ></div>
-    </a>
-  </ul>
-</div>
-        </div>
-      </a>
-      <a href="#" th:href="@{/admin/showtimes}"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="fas fa-ticket-alt fa-fw mr-3"></span>
+                <span class="menu-collapsed">Quản lí vé</span>
+            </div>
+        </a>
+        <a
+                href="#"
+                data-toggle="collapse"
+                aria-expanded="false"
+                class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-          <span class="fa fa-calendar-check fa-fw mr-3"></span>
-          <span class="menu-collapsed text-nowrap overflow-hidden"
-            >Suất chiếu</span
-          >
-        </div>
-      </a>
-      <a
-        href=""
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="fas fas fa-utensils fa-fw mr-3"></span>
+                <span class="menu-collapsed text-nowrap overflow-hidden"
+                >Thức ăn nhanh</span
+                >
+            </div>
+        </a>
+        <a
+                href="#"
+                data-toggle="collapse"
+                aria-expanded="false"
+                class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-          <span class="fas fas fa-utensils fa-fw mr-3"></span>
-          <span class="menu-collapsed text-nowrap overflow-hidden"
-            >Thức ăn nhanh</span
-          >
-        </div>
-      </a>
-      <a
-        href=""
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="fa fa-users fa-fw mr-3"></span>
+                <span class="menu-collapsed text-nowrap overflow-hidden"
+                >Quản lí tài khoản</span
+                >
+            </div>
+        </a>
+        <a
+                href="#"
+                data-toggle="collapse"
+                aria-expanded="false"
+                class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-          <span class="fa fa-users fa-fw mr-3"></span>
-          <span class="menu-collapsed text-nowrap overflow-hidden"
-            >Quản lí tài khoản</span
-          >
-        </div>
-      </a>
-      <a href="#" th:href="@{/admin/tickets}"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="menu-collapsed text-nowrap overflow-hidden"
+                ></span
+                >
+            </div>
+        </a>
+        <a
+                href="#"
+                data-toggle="collapse"
+                aria-expanded="false"
+                class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
         >
-          <span class="fas fa-ticket-alt fa-fw mr-3"></span>
-          <span class="menu-collapsed">Quản lí vé</span>
-        </div>
-      </a>
-      <a
-        href=""
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
-        >
-          <span class="icon fas fa-images fa-fw mr-3"></span>
-          <span class="menu-collapsed text-nowrap overflow-hidden">Quản lí banner</span>
-        </div>
-      </a>
-      <!--            <a href="" data-toggle="collapse" aria-expanded="false"-->
-      <!--               class="bg-dark list-group-item list-group-item-action flex-column align-items-start">-->
-      <!--                <div class="d-flex w-100 justify-content-start align-items-center">-->
-      <!--                </div>-->
-      <!--            </a>-->
-      <a
-        href=""
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="bg-dark list-group-item list-group-item-action flex-column align-items-start flex-grow-1"
-      >
-        <div
-          id="sidbar-menu-row"
-          class="d-flex w-100 justify-content-center align-items-center"
-        ></div>
-      </a>
+            <div
+                    id="sidbar-menu-row"
+                    class="d-flex w-100 justify-content-center align-items-center"
+            >
+                <span class="menu-collapsed text-nowrap overflow-hidden"
+                ></span
+                >
+            </div>
+        </a>
     </ul>
-  </div>
+</div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
-  $(document).ready(function () {
-    $("#sidebar-toggle").on("click", function () {
-      $("#sidebar-container").toggleClass("sidebar-collapsed sidebar-expanded");
-      $("#admin-layout-content").toggleClass(
-        "content-ml-sidebar-collapsed content-ml-sidebar-expanded"
-      );
-      $("[id='sidebar-logo-text-admin']").each(function () {
-        $(this).toggleClass("d-none");
-      });
-      $("#sidebar-toggle-arrow").toggleClass(
-        "fa-angle-double-left fa-angle-double-right"
-      );
-      const sidbarMenuRow = $('[id="sidbar-menu-row"]');
-      sidbarMenuRow.each(function () {
-        $(this).toggleClass("justify-content-center justify-content-start");
-      });
+    $(document).ready(function () {
+        $("#sidebar-toggle").on("click", function () {
+            $("#sidebar-container").toggleClass("sidebar-collapsed sidebar-expanded");
+            $("#admin-layout-content").toggleClass(
+                "content-ml-sidebar-collapsed content-ml-sidebar-expanded"
+            );
+            $("[id='sidebar-logo-text-admin']").each(function () {
+                $(this).toggleClass("d-none");
+            });
+            $("#sidebar-toggle-arrow").toggleClass(
+                "fa-angle-double-left fa-angle-double-right"
+            );
+            const sidbarMenuRow = $('[id="sidbar-menu-row"]');
+            sidbarMenuRow.each(function () {
+                $(this).toggleClass("justify-content-center justify-content-start");
+            });
+        });
+        $('.list-group-item[data-toggle="collapse"]').on("click", function () {
+            var $submenu = $(this).next(".collapse");
+            if ($submenu.hasClass("show")) {
+                $submenu.removeClass("show");
+                $(this).attr("aria-expanded", "false");
+                $submenu.addClass("hide");
+            } else {
+                $(".collapse").removeClass("show");
+                $('.list-group-item[data-toggle="collapse"]').attr(
+                    "aria-expanded",
+                    "false"
+                );
+                $submenu.addClass("show");
+                $(this).attr("aria-expanded", "true");
+            }
+        });
     });
-    $('.list-group-item[data-toggle="collapse"]').on("click", function () {
-      var $submenu = $(this).next(".collapse");
-      if ($submenu.hasClass("show")) {
-        $submenu.removeClass("show");
-        $(this).attr("aria-expanded", "false");
-        $submenu.addClass("hide");
-      } else {
-        $(".collapse").removeClass("show");
-        $('.list-group-item[data-toggle="collapse"]').attr(
-          "aria-expanded",
-          "false"
-        );
-        $submenu.addClass("show");
-        $(this).attr("aria-expanded", "true");
-      }
-    });
-  });
 </script>

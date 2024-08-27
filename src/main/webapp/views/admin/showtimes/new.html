@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/admin/layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Create Showtime</title>
+    <link rel="stylesheet" th:href="@{/assets/admin/css/showtime.css}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<section layout:fragment="body">
+    <div class="container-fluid mt-4">
+        <h3 class="m-2" style="color: darkblue">Thêm xuất chiếu</h3>
+
+        <form th:action="@{/admin/showtimes/new}" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="movie" class="form-label">Chọn phim:</label>
+                    <select class="form-control" id="movie" name="movieId">
+                        <option value="">Chọn Phim</option>
+                        <option value="1">Phim Conan</option>
+                        <option value="2">Phim Quy Cau</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="province" class="form-label">Tỉnh/Thành:</label>
+                    <select class="form-control" id="province" name="province" required>
+                        <option value="">Chọn Tỉnh/Thành</option>
+                        <option th:each="city : ${cities}"
+                                th:value="${city.id}"
+                                th:text="${city.name}"></option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="theater" class="form-label">Chọn rạp:</label>
+                    <select id="theater" name="theaterId" class="form-control">
+                        <option value="" disabled selected>Chọn rạp</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="date" class="form-label">Chọn ngày:</label>
+                    <input type="date" id="date" name="date" class="form-control"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="time" class="form-label">Giờ chiếu:</label>
+                    <input type="time" id="time" name="time" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-primary">Thêm xuất chiếu</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script th:src="@{/assets/admin/js/showtimes/index.js}"></script>
+</section>
+</body>
+</html>
