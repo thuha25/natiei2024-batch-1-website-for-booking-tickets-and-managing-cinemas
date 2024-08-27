@@ -56,6 +56,9 @@
     <property name="target">
       <bean class="cinemas.services.impl.ShowtimesServiceImpl">
         <constructor-arg ref="showtimesRepository" />
+        <constructor-arg ref="screensRepository"/>
+        <constructor-arg ref="citiesRepository"/>
+        <constructor-arg ref="moviesRepository"/>
       </bean>
     </property>
   </bean>

@@ -22,16 +22,16 @@ public class Showtime extends CreationUpdationAuditableEntity {
     private Integer priceVip;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id", insertable = false, updatable = false)
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "screen_id", insertable = false, updatable = false)
+    @JoinColumn(name = "screen_id")
     private Screen screen;
     @OneToMany(mappedBy = "showtime")
     private Set<ShowtimeSeat> showtimeSeats;
     @ManyToOne
-    @JoinColumn(name = "city_id", insertable = false, updatable = false)
+    @JoinColumn(name = "city_id")
     private City city;
 
     public City getCity() {
