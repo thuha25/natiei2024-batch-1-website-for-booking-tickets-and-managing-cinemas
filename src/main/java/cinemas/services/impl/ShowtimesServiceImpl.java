@@ -1,15 +1,23 @@
 package cinemas.services.impl;
 
 import cinemas.dtos.ShowtimeByTheaterDto;
+import cinemas.exceptions.CityNotFoundException;
+import cinemas.exceptions.MovieNotFoundException;
+import cinemas.exceptions.ScreenNotFoundException;
 import cinemas.models.Movie;
 import cinemas.models.Screen;
 import cinemas.models.Showtime;
 import cinemas.models.Theater;
+import cinemas.repositories.CitiesRepository;
+import cinemas.repositories.MoviesRepository;
+import cinemas.repositories.ScreensRepository;
 import cinemas.repositories.ShowtimesRepository;
 import cinemas.services.ShowtimesService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +28,20 @@ import java.util.stream.IntStream;
 
 public class ShowtimesServiceImpl implements ShowtimesService {
     private ShowtimesRepository showtimesRepository;
-    public ShowtimesServiceImpl(ShowtimesRepository showtimeRepository){this.showtimesRepository = showtimeRepository;}
+    private ScreensRepository screensRepository;
+    private CitiesRepository citiesRepository;
+    private MoviesRepository moviesRepository;
+
+    public ShowtimesServiceImpl(ShowtimesRepository showtimeRepository,
+                                ScreensRepository screensRepository,
+                                CitiesRepository citiesRepository,
+                                MoviesRepository moviesRepository) {
+        this.showtimesRepository = showtimeRepository;
+        this.screensRepository = screensRepository;
+        this.citiesRepository = citiesRepository;
+        this.moviesRepository = moviesRepository;
+    }
+
     @Override
     public Showtime save(Showtime showtime) {
         return showtimesRepository.save(showtime);
@@ -30,6 +51,7 @@ public class ShowtimesServiceImpl implements ShowtimesService {
     public List<Showtime> getShowtimeByDateAndCity(int movieId, int cityId, LocalDate date) {
         return showtimesRepository.getShowtimeByDateAndCity(movieId, cityId, date);
     }
+
     @Override
     public List<Map<String, String>> generateFormattedDates(LocalDate startDate, int daysRange) {
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MM");
@@ -68,10 +90,10 @@ public class ShowtimesServiceImpl implements ShowtimesService {
     }
 
     @Override
-    public List<ShowtimeByTheaterDto> getShowtimeByTheater(int theaterId, LocalDate date){
+    public List<ShowtimeByTheaterDto> getShowtimeByTheater(int theaterId, LocalDate date) {
         List<Showtime> showtimes = showtimesRepository.getShowtimeByTheaterAndDate(theaterId, date);
         List<ShowtimeByTheaterDto> showtimeByTheaterDtos = new ArrayList<>();
-        for(Showtime showtime : showtimes){
+        for (Showtime showtime : showtimes) {
             Movie movie = showtime.getMovie();
             Screen screen = showtime.getScreen();
             LocalTime timeShow = showtime.getStartTime().toLocalTime();
@@ -81,6 +103,7 @@ public class ShowtimesServiceImpl implements ShowtimesService {
         }
         return showtimeByTheaterDtos;
     }
+
     @Override
     public Map<Movie, Map<Screen, List<ShowtimeByTheaterDto>>> groupByMovieAndScreen(List<ShowtimeByTheaterDto> showtimeDtos) {
         return showtimeDtos.stream()
@@ -98,5 +121,37 @@ public class ShowtimesServiceImpl implements ShowtimesService {
     @Override
     public List<Showtime> getShowtimeByTheaterAndDateWithStartTimeAsc(int theaterId, LocalDate date) {
         return showtimesRepository.getShowtimeByTheaterAndDateWithStartTimeAsc(theaterId, date);
+    }
+
+    @Override
+    public Showtime createShowtime(int cityId, int screenId, int movieId, LocalDate date, LocalTime time, int priceStandard, int priceVip) throws ScreenNotFoundException, CityNotFoundException, MovieNotFoundException {
+        Showtime showtime = new Showtime();
+        var screenOptional = screensRepository.findById(screenId);
+        if (screenOptional.isEmpty()) {
+            throw new ScreenNotFoundException();
+        }
+        var cityOptional = citiesRepository.findById(cityId);
+        if (cityOptional.isEmpty()) {
+            throw new CityNotFoundException();
+        }
+        var movieOptional = moviesRepository.findById(movieId);
+        if (movieOptional.isEmpty()) {
+            throw new MovieNotFoundException();
+        }
+        var screen = screenOptional.get();
+        var city = cityOptional.get();
+        var movie = movieOptional.get();
+        // Get the system's default time zone
+        ZoneId systemZoneId = ZoneId.systemDefault();
+
+        // Convert LocalDate and LocalTime to ZonedDateTime using the system's default time zone
+        ZonedDateTime startTime = ZonedDateTime.of(date, time, systemZoneId);
+        showtime.setScreen(screen);
+        showtime.setCity(city);
+        showtime.setMovie(movie);
+        showtime.setStartTime(startTime);
+        showtime.setPriceStandard(priceStandard);
+        showtime.setPriceVip(priceVip);
+        return showtimesRepository.save(showtime);
     }
 }
